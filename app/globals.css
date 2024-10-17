@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.main_content__position {
+  background-color: rgb(255, 255, 255);
+  min-height: 100vh;
+  padding-top: 0;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 290px;
+}
+
+@media only screen and (max-width: 840px) {
+  .main_content__position {
+    min-height: 100vh;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 390px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main_content__position {
+    min-height: 100vh;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 550px;
+  }
+}

@@ -21,12 +21,14 @@ const MainCategory = async ({
   categoryName: string;
 }) => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/post/main-category?main=${categoryName}&page=${page || 1}`,
+    `${
+      process.env.BACKEND_URL
+    }api/post/main-category?main=${categoryName}&page=${page || 1}`,
     {
       next: {
         revalidate: 600,
       },
-    },
+    }
   );
   const data = await res.json();
 

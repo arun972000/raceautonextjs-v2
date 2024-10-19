@@ -1,9 +1,8 @@
-import { FaNoteSticky } from "react-icons/fa6";
 import "./Dashboard.css";
 
 const DashboardCard = ({ total, title, bgcolor, icon }: { total: number; title: string, bgcolor:string, icon:any }) => {
   return (
-    <div className="col-lg-3">
+    <div className="col-md-6 col-lg-3">
       <div
         className="card mb-3 border-0 shadow dashboard__card"
         style={{

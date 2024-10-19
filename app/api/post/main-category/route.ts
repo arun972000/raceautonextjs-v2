@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const main = searchParams.get("main");
     const page: any = searchParams.get("page");
 
-    const limit = 10; // Items per page
+    const limit = 10;
     const offset = (page - 1) * limit;
 
     const [row] = await db.execute<RowDataPacket[]>(

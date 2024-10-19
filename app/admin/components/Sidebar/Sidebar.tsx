@@ -42,7 +42,7 @@ const AdminSidebar = async () => {
     >
       <div
         className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 mt-2"
-        style={{ position: "fixed" }}
+        
       >
         <div style={{ borderBottom: "1px solid black" }} className="mb-2">
           <Link
@@ -61,6 +61,7 @@ const AdminSidebar = async () => {
         <ul
           className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
           id="menu"
+          
         >
           <li className="nav-item ">
             <Link href="/admin" className="nav-link align-middle px-0">
@@ -284,7 +285,7 @@ const AdminSidebar = async () => {
           </li>
         </ul>
 
-        <hr />
+        {/* <hr />
         <div className="dropdown pb-4">
           <a
             href="#"
@@ -315,7 +316,7 @@ const AdminSidebar = async () => {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
+    "@hello-pangea/dnd": "^17.0.0",
     "@plaiceholder/next": "^3.0.0",
+    "@tinymce/tinymce-react": "^5.1.1",
     "axios": "^1.7.6",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
     "core-js": "^3.38.1",
     "html-react-parser": "^5.1.16",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.0",
     "next": "^14.2.12",
     "react": "^18",
@@ -30,14 +33,18 @@
     "react-player": "^2.16.0",
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.6",
+    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.1.12"
+    "swiper": "^11.1.12",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/multer": "^1.4.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-slick": "^0.23.13",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "typescript": "^5"

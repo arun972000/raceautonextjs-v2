@@ -24,7 +24,7 @@ export type adminPostList = {
 const ArticleList = async ({ page }: { page: string }) => {
   const res = await fetch(
     `${process.env.BACKEND_URL}api/admin/admin-post?page=${page || 1}`,
-    { cache: "no-store" }
+    { cache: 'no-store'}
   );
   const post = await res.json();
 

@@ -1,100 +1,343 @@
-'use client'
-import { useState } from "react";
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/alt-text */
+"use client";
+import {
+  Key,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import {toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Form, Button, Row, Col, Card, Container } from "react-bootstrap";
 import "./create.css"; // Custom CSS file for additional styling
+import { useDropzone } from "react-dropzone";
+import { IoClose } from "react-icons/io5";
+import { Editor } from "@tinymce/tinymce-react";
 
 export default function AdminPost() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    title: "",
-    summary: "",
-    tags: "",
-    category: "",
-    subCategory: "",
-    market: "",
-    content: "",
-    keywords: "",
-    image: null,
-    imageDescription: "",
-    schedule: "",
-    slider: false,
-    featured: false,
-    recommended: false,
-    breaking: false,
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [summary, setSummary] = useState<string>("");
+  const [category_main, setCategory_main] = useState<string>("");
+  const [category_sub, setCategory_sub] = useState<string>("");
+  const [keywords, setKeywords] = useState<string>("");
+  const [imageDescription, setImageDescription] = useState<string>("");
+  const [marketValue, setMarketValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [scheduledAt, setScheduledAt] = useState<string>("");
+  const [isSlider, setIsSlider] = useState<number>(0);
+  const [isFeatured, setIsFeatured] = useState<number>(0);
+  const [isRecommended, setIsRecommended] = useState<number>(0);
+  const [isBreaking, setIsBreaking] = useState<number>(0);
+  const [image_default, setImage_default] = useState<any>([]);
+  const [mainCategory_array, setMainCategory_array] = useState<string[]>([]);
+  const [subCategory_array, setSubCategory_array] = useState<string[]>([]);
+  const [marketArray, setMarketArray] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const editorRef = useRef<any>(null);
+  const [validated, setValidated] = useState<boolean>(false);
+  const [draft, setDraft] = useState<boolean>(false);
+
+  const handleInputChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (event: { key: string }) => {
+    if (event.key === "Enter" && inputValue) {
+      setTags([...tags, inputValue]);
+      setInputValue("");
+    }
+  };
+
+  const handleRemoveTag = (index: number) => {
+    setTags(tags.filter((_, i) => i !== index));
+  };
+
+  const baseStyle = {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: "#eeee",
+    borderStyle: "dashed",
+    backgroundColor: "#fafafa",
+    color: "#bdbdbd",
+    outline: "none",
+    transition: "border .24s ease-in-out",
+  };
+
+  const thumb = {
+    display: "inline-flex",
+    alignItems: "top",
+    borderRadius: 2,
+    border: "1px solid #eaeaea",
+    marginBottom: 8,
+    marginRight: 8,
+    width: 110,
+    height: 100,
+    padding: 4,
+  };
+
+  const thumbInner = {
+    display: "flex",
+    minWidth: 0,
+    overflow: "hidden",
+  };
+
+  const img = {
+    display: "block",
+    width: "auto",
+    height: "100%",
+  };
+
+  const focusedStyle = {
+    borderColor: "#2196f3",
+  };
+
+  const acceptStyle = {
+    borderColor: "#00e676",
+  };
+
+  const rejectStyle = {
+    borderColor: "#ff1744",
+  };
+  const maxSize = 5 * 1024 * 1024;
+
+  const {
+    getRootProps,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+    fileRejections,
+  } = useDropzone({
+    maxSize,
+
+    accept: {
+      "image/*": [],
+    },
+    onDrop: (acceptedFiles: any[]) => {
+      setImage_default((prevFiles: any) => [
+        ...prevFiles,
+        ...acceptedFiles.map((file: Blob | MediaSource) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        ),
+      ]);
+    },
+    onDropRejected: (fileRejections: { file: any; errors: any }[]) => {
+      fileRejections.forEach(({ file, errors }) => {
+        errors.forEach((error: { message: any }) => {
+          console.error(`Error with file ${file.name}: ${error.message}`);
+        });
+      });
+    },
   });
-  const [validated, setValidated] = useState(false);
 
-  const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+  const fileRejectionItems = fileRejections.map(({ file }: { file: any }) => (
+    <li key={file.path} style={{ color: "red" }}>
+      {file.path} has been rejected due to large in size
+      <ul></ul>
+    </li>
+  ));
+
+  const removeFile = (file: any) => () => {
+    const newFiles = [...image_default];
+    newFiles.splice(newFiles.indexOf(file), 1);
+    setImage_default(newFiles);
   };
 
-  const handleImageChange = (e: any) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0],
-    });
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  );
+
+  const files =
+    image_default !== null &&
+    image_default.map((file: { path: any; name: any; preview: string }) => (
+      <li key={file.path}>
+        <div style={thumb} key={file.name}>
+          <div style={thumbInner}>
+            <img
+              src={file.preview}
+              style={img}
+              // Revoke data uri after image is loaded
+              onLoad={() => {
+                URL.revokeObjectURL(file.preview);
+              }}
+            />
+          </div>
+          <IoClose onClick={removeFile(file)} size={25} />
+        </div>
+      </li>
+    ));
+
+  const toggleCheckbox = (setState: any) => {
+    setState((prevState: any) => (prevState === 1 ? 0 : 1));
   };
 
-  const checkMissingFields = () => {
-    const missingFields = [];
+  const formatDateTime = (date: any) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    if (!formData.title) missingFields.push("Title");
-    if (!formData.summary) missingFields.push("Summary");
-    if (!formData.category) missingFields.push("Category");
-    if (!formData.image) missingFields.push("Image");
-    if (!formData.content) missingFields.push("Content");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
 
-    return missingFields;
+  const handleEditorChange = (editContent: SetStateAction<string>) => {
+    setContent(editContent);
+  };
+  const handleKeywordsChange = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setKeywords(e.target.value);
+  };
+
+  const categoryApi = async () => {
+    try {
+      const mainCategoryRes = await axios.get(
+        `${process.env.BACKEND_URL}api/category/main-category`
+      );
+      setMainCategory_array(mainCategoryRes.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const marketApi = async () => {
+    try {
+      const marketRes = await axios.get(
+        `${process.env.BACKEND_URL}api/category/market`
+      );
+      setMarketArray(marketRes.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const subCategoryApi = async () => {
+    if (
+      category_main === "none" ||
+      category_main === undefined ||
+      category_main === ""
+    ) {
+      setSubCategory_array([]);
+      return;
+    }
+
+    try {
+      const subCategoryRes = await axios.get(
+        `${process.env.BACKEND_URL}api/category/sub-category/${category_main}`
+      );
+      setSubCategory_array(subCategoryRes.data); // Set subcategory data if API call is successful
+    } catch (err) {
+      console.log(err); // Handle error
+    }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const form = e.currentTarget;
+    const missingFields = [];
 
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-      setValidated(true);
-      return;
-    }
-
-    const missingFields = checkMissingFields();
+    // Check each field and add to missingFields array if empty
+    if (!title || title == "" || title == undefined)
+      missingFields.push("Title");
+    if (!content || content == "" || content == undefined)
+      missingFields.push("Content");
+    if (!summary || summary == "") missingFields.push("Summary");
+    if (!category_main || category_main == "none" || category_main == "")
+      missingFields.push("Main Category");
+    if (!category_sub || category_sub == "none" || category_sub == "")
+      missingFields.push("Sub Category");
+    if (!keywords || keywords == "") missingFields.push("Keywords");
+    if (!image_default) missingFields.push("Default Image");
+    if (!marketValue || marketValue == "none")
+      missingFields.push("Market Value");
+    if (!tags || tags.length == 0) missingFields.push("Tags");
 
     if (missingFields.length > 0) {
-      toast.error(
-        `Please fill in the following fields: ${missingFields.join(", ")}`
-      );
+      // Join the missing fields into a comma-separated list
+      const missingFieldsList = missingFields.join(", ");
+
+      // Display toast message with missing fields
+      toast.info(`Please fill out the following fields: ${missingFieldsList}`, {
+        position: "top-right",
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
-    // Submit form to the server
+    
+
+    const formData = new FormData();
+  formData.append('draft',draft.toString())
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("summary", summary);
+    formData.append("category_id", category_sub);
+    formData.append("keywords", keywords);
+    image_default.forEach((file: any) => {
+      formData.append("image_default", file);
+    });
+    formData.append("tags", tags.join(","));
+    formData.append("is_slider", isSlider.toString());
+    formData.append("is_featured", isFeatured.toString());
+    formData.append("is_recommended", isRecommended.toString());
+    formData.append("is_breaking", isBreaking.toString());
+    formData.append("user_id", "admin");
+    formData.append("image_description", imageDescription);
+    formData.append("market", marketValue);
     try {
-      const response = await axios.post(
-        `${process.env.BACKEND_URL}/api/admin/create-post`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+      await axios.post(
+        `${process.env.BACKEND_URL}api/admin/post/create`,
+        formData
       );
-      toast.success("Post submitted successfully!");
-      router.refresh();
-    } catch (error) {
-      toast.error("Failed to submit post.");
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  useEffect(() => {
+    categoryApi();
+    marketApi();
+  }, []);
+
+  useEffect(() => {
+    subCategoryApi();
+  }, [category_main]);
 
   return (
     <Container className="my-5">
       <Card className="p-4 shadow-lg form-card">
         <h1 className="text-center mb-4">Create New Post</h1>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Row>
             <Col md={8}>
               <Form.Group className="mb-4" controlId="title">
@@ -103,8 +346,8 @@ export default function AdminPost() {
                   type="text"
                   placeholder="Enter title"
                   name="title"
-                  value={formData.title}
-                  onChange={handleChange}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   className="form-input"
                   required
                 />
@@ -120,8 +363,8 @@ export default function AdminPost() {
                   rows={3}
                   placeholder="Enter Summary"
                   name="summary"
-                  value={formData.summary}
-                  onChange={handleChange}
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
                   className="form-input"
                   required
                 />
@@ -129,18 +372,94 @@ export default function AdminPost() {
                   Summary is required.
                 </Form.Control.Feedback>
               </Form.Group>
+              <div className="my-3">
+                <Form.Label className="form-label">Tag</Form.Label>
 
+                <div className="mb-3">
+                  {tags.map((tag, index) => (
+                    <span key={index} className="badge bg-primary me-2">
+                      {tag}
+                      <button
+                        type="button"
+                        className="btn-close btn-close-white ms-2"
+                        aria-label="Close"
+                        onClick={() => handleRemoveTag(index)}
+                      ></button>
+                    </span>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Add a tag and press Enter"
+                />
+              </div>
               <Form.Group className="mb-4" controlId="content">
                 <Form.Label className="form-label">Content</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={8}
-                  placeholder="Write your content"
-                  name="content"
-                  value={formData.content}
-                  onChange={handleChange}
-                  className="form-input"
-                  required
+                <Editor
+                  id="raceautoindia"
+                  apiKey="3fr142nwyhd2jop9d509ekq6i2ks2u6dmrbgm8c74gu5xrml"
+                  onInit={(_evt, editor) => (editorRef.current = editor)}
+                  value={content}
+                  init={{
+                    height: 500,
+                    menubar: true,
+                    plugins: [
+                      "advlist",
+                      "autolink",
+                      "lists",
+                      "link",
+                      "image",
+                      "charmap",
+                      "preview",
+                      "anchor",
+                      "searchreplace",
+                      "visualblocks",
+                      "code",
+                      "fullscreen",
+                      "insertdatetime",
+                      "media",
+                      "table",
+                      "code",
+                      "help",
+                      "wordcount",
+                    ],
+                    image_dimensions: false,
+                    image_class_list: [
+                      { title: "Responsive", value: "img-responsive" },
+                    ],
+                    toolbar:
+                      "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+                    content_style:
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                    // images_upload_handler: handleImageUpload,
+                    file_picker_callback: (callback, value, meta) => {
+                      if (meta.filetype === "image") {
+                        const input = document.createElement("input");
+                        input.setAttribute("type", "file");
+                        input.setAttribute("accept", "image/*");
+                        input.onchange = function () {
+                          const file = this.files[0];
+                          const reader: any = new FileReader();
+                          reader.onload = function () {
+                            const id = "blobid" + new Date().getTime();
+                            const blobCache =
+                              editorRef.current.editorUpload.blobCache;
+                            const base64 = reader.result.split(",")[1];
+                            const blobInfo = blobCache.create(id, file, base64);
+                            blobCache.add(blobInfo);
+                            callback(blobInfo.blobUri(), { title: file.name });
+                          };
+                          reader.readAsDataURL(file);
+                        };
+                        input.click();
+                      }
+                    },
+                  }}
+                  onEditorChange={handleEditorChange}
                 />
                 <Form.Control.Feedback type="invalid">
                   Content is required.
@@ -152,14 +471,19 @@ export default function AdminPost() {
               <Form.Group className="mb-4" controlId="category">
                 <Form.Label className="form-label">Category</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="form-input"
+                  as="select"
+                  value={category_main}
+                  onChange={(e) => setCategory_main(e.target.value)}
                   required
-                />
+                >
+                  <option value="none">None</option>
+                  {mainCategory_array.map((item: any) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </Form.Control>
+
                 <Form.Control.Feedback type="invalid">
                   Category is required.
                 </Form.Control.Feedback>
@@ -168,28 +492,61 @@ export default function AdminPost() {
               <Form.Group className="mb-4" controlId="subCategory">
                 <Form.Label className="form-label">Sub Category</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter sub category"
-                  name="subCategory"
-                  value={formData.subCategory}
-                  onChange={handleChange}
-                  className="form-input"
-                />
+                  as="select"
+                  value={category_sub}
+                  onChange={(e) => setCategory_sub(e.target.value)}
+                  required
+                >
+                  <option value="none">None</option>
+                  {subCategory_array !== undefined &&
+                    subCategory_array.map((item: any) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </Form.Control>
               </Form.Group>
 
-              <Form.Group className="mb-4" controlId="image">
-                <Form.Label className="form-label">Select Image</Form.Label>
+              <Form.Group className="mb-4" controlId="Market">
+                <Form.Label className="form-label">Market</Form.Label>
                 <Form.Control
-                  type="file"
-                  name="image"
-                  onChange={handleImageChange}
-                  className="form-input"
+                  as="select"
+                  value={marketValue}
+                  onChange={(e) => setMarketValue(e.target.value)}
                   required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please upload an image.
-                </Form.Control.Feedback>
-                <small className="text-muted">Max 5MB image size.</small>
+                >
+                  <option value="none">None</option>
+                  {marketArray !== undefined &&
+                    marketArray.map((item: any) => (
+                      <option key={item.id} value={item.id}>
+                        {item.title}
+                      </option>
+                    ))}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="image_default" className="mb-3">
+                <Form.Label>Select Image</Form.Label>
+
+                <div {...getRootProps({ style })}>
+                  <p style={{ color: "orange" }}>
+                    Note: The image size should not exceed 5 MB.
+                  </p>
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+                <aside
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    marginTop: 16,
+                  }}
+                >
+                  {/* {thumbs} */}
+                  {files}
+                  <ul>{fileRejectionItems}</ul>
+                </aside>
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="schedule">
@@ -199,63 +556,68 @@ export default function AdminPost() {
                 <Form.Control
                   type="datetime-local"
                   name="schedule"
-                  value={formData.schedule}
-                  onChange={handleChange}
+                  value={scheduledAt}
+                  onChange={(e) => setScheduledAt(e.target.value)}
                   className="form-input"
                 />
               </Form.Group>
 
-              <Form.Group className="mb-4" controlId="tags">
-                <Form.Label className="form-label">Tags</Form.Label>
+              <Form.Check
+                type="checkbox"
+                id="sliderCheckbox"
+                label="Slider"
+                checked={isSlider === 1}
+                onChange={() => toggleCheckbox(setIsSlider)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="featuredCheckbox"
+                label="Featured"
+                checked={isFeatured === 1}
+                onChange={() => toggleCheckbox(setIsFeatured)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="recommendedCheckbox"
+                label="Recommended"
+                checked={isRecommended === 1}
+                onChange={() => toggleCheckbox(setIsRecommended)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="breakingCheckbox"
+                label="Breaking"
+                checked={isBreaking === 1}
+                onChange={() => toggleCheckbox(setIsBreaking)}
+              />
+
+              <Form.Group controlId="formKeywords" className="mb-3">
+                <Form.Label>Keywords</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Add a tag"
-                  name="tags"
-                  value={formData.tags}
-                  onChange={handleChange}
-                  className="form-input"
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  label="Slider"
-                  name="slider"
-                  checked={formData.slider}
-                  onChange={handleChange}
-                  className="form-checkbox"
-                />
-                <Form.Check
-                  type="checkbox"
-                  label="Featured"
-                  name="featured"
-                  checked={formData.featured}
-                  onChange={handleChange}
-                  className="form-checkbox"
-                />
-                <Form.Check
-                  type="checkbox"
-                  label="Recommended"
-                  name="recommended"
-                  checked={formData.recommended}
-                  onChange={handleChange}
-                  className="form-checkbox"
-                />
-                <Form.Check
-                  type="checkbox"
-                  label="Breaking"
-                  name="breaking"
-                  checked={formData.breaking}
-                  onChange={handleChange}
-                  className="form-checkbox"
+                  placeholder="Enter keywords"
+                  value={keywords}
+                  onChange={handleKeywordsChange}
+                  required
                 />
               </Form.Group>
             </Col>
           </Row>
-
-          <Button type="submit" className="btn btn-primary submit-btn">
-            Submit Post
+          <Form.Check
+            type="checkbox"
+            id="draftCheckbox"
+            label={draft ? 'Disable Draft mode' : 'Enable Draft mode'}
+            checked={draft}
+            className="text-danger mb-3"
+            onChange={() => setDraft(!draft)}
+          />
+          <Button
+            type="submit"
+            className={`${
+              draft ? "btn-danger" : "btn-primary"
+            } btn`}
+          >
+            {draft ? "Save to Draft" : "Publish"}
           </Button>
         </Form>
       </Card>

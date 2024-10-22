@@ -62,8 +62,9 @@ export async function GET(req: NextRequest) {
         return { ...item, main_category: null, main_category_slug: null };
       }
     });
-
+    console.log(results)
     return NextResponse.json({ data: results, totalPost: totalPosts.length });
+    
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json("Internal Server Error", { status: 500 });

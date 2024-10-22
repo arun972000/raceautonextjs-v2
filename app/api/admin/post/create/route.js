@@ -1,0 +1,173 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { v4 as uuidv4 } from 'uuid';
+import fs from 'fs';
+import path from 'path';
+import sharp from 'sharp';
+import db from '@/lib/db';
+
+export const config = {
+  api: {
+    bodyParser: false, // Disable the default body parser
+  },
+};
+
+const currentDate = new Date();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = String(currentDate.getFullYear());
+  const folderName = `${year}${month}`;
+
+export async function POST(req) {
+  try {
+    const formData = await req.formData();
+const title = formData.get('title');
+const content = formData.get('content')
+const summary = formData.get('summary')
+const category_id = formData.get('category_id')
+const keywords = formData.get('keywords')
+const tags = formData.get('tags')
+const is_slider = formData.get('is_slider')
+const is_featured = formData.get('is_featured')
+const is_recommended = formData.get('is_recommended')
+const is_breaking = formData.get('is_breaking')
+const user_id = 3
+const image_description = formData.get('image_description')
+const market = formData.get('market')
+const draftValue = formData.get('draft')
+
+const draft = draftValue == 'true' ? 0 : 1
+
+const title_slug = title.split(" ").join("-");
+
+const tags_split = tags.split(",");
+
+    const uploadedFiles = [];
+    const primaryFolder = folderName;
+
+    // Create upload directories for both folders
+    const primaryUploadDir = path.join(process.cwd(), 'public/uploads/images', primaryFolder);
+    
+    if (!fs.existsSync(primaryUploadDir)) {
+      fs.mkdirSync(primaryUploadDir, { recursive: true });
+    }
+
+    // Array to hold files
+    const files = [];
+
+    // Collect all files from formData
+    for (const [key, value] of formData.entries()) {
+      if (value instanceof Blob) {
+        files.push(value);
+      }
+    }
+
+
+    if (files.length > 0) {
+      const firstFile = files[0];
+      const firstFilename = firstFile.name;
+      const firstFileExtension = path.extname(firstFilename);
+      const newFirstFilename = `${uuidv4()}${firstFileExtension}`;
+      const firstFilePath = path.join(primaryUploadDir, newFirstFilename);
+
+      // Save the first file
+      const firstFileBuffer = Buffer.from(await firstFile.arrayBuffer());
+      fs.writeFileSync(firstFilePath, firstFileBuffer);
+
+      uploadedFiles.push({
+        originalFilename: firstFilename,
+        newFilename: newFirstFilename,
+        filePath: `/uploads/${primaryFolder}/${newFirstFilename}`,
+      });
+      const image_default = `./public/uploads/images/${folderName}/${newFirstFilename}`;
+
+      const image_big = `./public/uploads/images/${folderName}/750${newFirstFilename}`;
+    const image_small = `./public/uploads/images/${folderName}/140${newFirstFilename}`;
+    const image_mid = `./public/uploads/images/${folderName}/380${newFirstFilename}`;
+
+      const img_default = `uploads/images/${folderName}/${newFirstFilename}`;
+      const img_big = `uploads/images/${folderName}/750${newFirstFilename}`;
+      const img_small = `uploads/images/${folderName}/140${newFirstFilename}`;
+      const img_mid = `uploads/images/${folderName}/380${newFirstFilename}`;
+
+      await sharp(image_default).resize(750, 500).toFile(image_big);
+      await sharp(image_default).resize(140, 90).toFile(image_small);
+      await sharp(image_default).resize(380, 226).toFile(image_mid);
+
+      const postQuery = [
+        title,
+        title_slug,
+        keywords,
+        summary,
+        content,
+        category_id,
+        img_big,
+        img_default,
+        img_mid,
+        img_small,
+        is_slider,
+        is_featured,
+        is_recommended,
+        user_id,
+        is_breaking,
+        image_description,
+        market,
+        draft
+      ];
+      const [postResult] = await db.execute(
+        `
+        INSERT INTO posts (
+          title, title_slug, keywords, summary, content, category_id, image_big, image_default, 
+          image_mid, image_small, is_slider, is_featured, is_recommended, user_id,
+          is_breaking, image_description, market, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+        postQuery
+      );
+
+      const postId = postResult.insertId;
+
+      for (const item of tags_split) {
+        const tag_slug = item.split(" ").join("-");
+        await db.execute(
+          `INSERT INTO tags (post_id, tag, tag_slug) VALUES (?, ?, ?)`,
+          [postId, item, tag_slug]
+        );
+      }
+
+    }
+
+
+
+    // Handle remaining files (secondary files)
+    // if (files.length > 1) {
+    //   const remainingFiles = files.slice(1);
+
+    //   for (const file of remainingFiles) {
+    //     const originalFilename = file.name;
+    //     const fileExtension = path.extname(originalFilename);
+    //     const newFilename = `${uuidv4()}${fileExtension}`;
+    //     const filePath = path.join(primaryUploadDir, newFilename);
+
+    //     // Save each remaining file
+    //     const fileBuffer = Buffer.from(await file.arrayBuffer());
+    //     fs.writeFileSync(filePath, fileBuffer);
+
+    //     uploadedFiles.push({
+    //       originalFilename,
+    //       newFilename,
+    //       filePath: `/uploads/${primaryFolder}/${newFilename}`,
+    //     });
+    //   }
+
+      
+
+    // }
+
+    return NextResponse.json({
+      message: 'Files uploaded successfully',
+    });
+
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+

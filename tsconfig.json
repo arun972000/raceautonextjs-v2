@@ -29,6 +29,6 @@
     "components/HomeCategories/Varients/Varient 3/Varient3.jsx",
     "app/magazine/[title_slug]/FlipBook.jsx",
     "components/BootstrapClient.js"
-, "app/api/admin/post/create/route.js"  ],
+, "app/api/admin/post/create/route.js", "app/api/admin/post/edit/[id]/route.js", "app/api/admin/magazine/[id]/route.js", "app/api/admin/magazine/route.js"  ],
   "exclude": ["node_modules"]
 }

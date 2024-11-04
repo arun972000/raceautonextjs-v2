@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     FROM posts 
     INNER JOIN users ON posts.user_id = users.id
     INNER JOIN categories ON posts.category_id = categories.id 
-    WHERE 1 = 1`;
+    WHERE posts.is_scheduled = 0 AND posts.status = 1`;
 
   let totalPostQuery = `
   SELECT posts.id, posts.image_small, posts.title, posts.pageviews, posts.title_slug, posts.created_at, 
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
   FROM posts 
   INNER JOIN users ON posts.user_id = users.id
   INNER JOIN categories ON posts.category_id = categories.id 
-  WHERE 1 = 1`;
+  WHERE posts.is_scheduled = 0 AND posts.status = 1`;
 
   const queryParams: any = [];
 
@@ -62,7 +62,6 @@ export async function GET(req: NextRequest) {
         return { ...item, main_category: null, main_category_slug: null };
       }
     });
-    console.log(results)
     return NextResponse.json({ data: results, totalPost: totalPosts.length });
     
   } catch (error) {

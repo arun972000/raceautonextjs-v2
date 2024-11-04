@@ -36,6 +36,7 @@ export default function AdminPost() {
   const [isFeatured, setIsFeatured] = useState<number>(0);
   const [isRecommended, setIsRecommended] = useState<number>(0);
   const [isBreaking, setIsBreaking] = useState<number>(0);
+  const [isScheduled, setisScheduled] = useState(false);
   const [image_default, setImage_default] = useState<any>([]);
   const [mainCategory_array, setMainCategory_array] = useState<string[]>([]);
   const [subCategory_array, setSubCategory_array] = useState<string[]>([]);
@@ -44,6 +45,7 @@ export default function AdminPost() {
   const editorRef = useRef<any>(null);
   const [validated, setValidated] = useState<boolean>(false);
   const [draft, setDraft] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
@@ -258,23 +260,25 @@ export default function AdminPost() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    // Prevent further submissions
+    if (isSubmitting) return;
+
     const missingFields = [];
 
     // Check each field and add to missingFields array if empty
-    if (!title || title == "" || title == undefined)
-      missingFields.push("Title");
-    if (!content || content == "" || content == undefined)
-      missingFields.push("Content");
-    if (!summary || summary == "") missingFields.push("Summary");
-    if (!category_main || category_main == "none" || category_main == "")
+    if (!title || title === "") missingFields.push("Title");
+    if (!content || content === "") missingFields.push("Content");
+    if (!summary || summary === "") missingFields.push("Summary");
+    if (!category_main || category_main === "none" || category_main === "")
       missingFields.push("Main Category");
-    if (!category_sub || category_sub == "none" || category_sub == "")
+    if (!category_sub || category_sub === "none" || category_sub === "")
       missingFields.push("Sub Category");
-    if (!keywords || keywords == "") missingFields.push("Keywords");
+    if (!keywords || keywords === "") missingFields.push("Keywords");
     if (!image_default) missingFields.push("Default Image");
-    if (!marketValue || marketValue == "none")
+    if (!marketValue || marketValue === "none")
       missingFields.push("Market Value");
-    if (!tags || tags.length == 0) missingFields.push("Tags");
+    if (!tags || tags.length === 0) missingFields.push("Tags");
 
     if (missingFields.length > 0) {
       // Join the missing fields into a comma-separated list
@@ -294,10 +298,9 @@ export default function AdminPost() {
       return;
     }
 
-    
-
     const formData = new FormData();
-  formData.append('draft',draft.toString())
+    formData.append("draft", draft.toString());
+    if (isScheduled) formData.append("schedule_time", scheduledAt);
     formData.append("title", title);
     formData.append("content", content);
     formData.append("summary", summary);
@@ -314,15 +317,49 @@ export default function AdminPost() {
     formData.append("user_id", "admin");
     formData.append("image_description", imageDescription);
     formData.append("market", marketValue);
+
+    // Indicate submission is in progress
+    setIsSubmitting(true);
+    const toastId = toast.loading("Submitting your post...", {
+      position: "top-right",
+      hideProgressBar: true,
+      closeOnClick: false,
+      draggable: false,
+      progress: undefined,
+    });
+
     try {
+      // Await for the post request
       await axios.post(
         `${process.env.BACKEND_URL}api/admin/post/create`,
         formData
       );
+
+      // Change the toast to success
+      toast.update(toastId, {
+        render: "Post submitted successfully!",
+        type: "success",
+        autoClose: 5000,
+        isLoading: false,
+        closeOnClick: true,
+      });
     } catch (err) {
+      // Change the toast to error message
+      toast.update(toastId, {
+        render: "There was an error submitting your post. Please try again.",
+        type: "error",
+        autoClose: 5000,
+        isLoading: false,
+        closeOnClick: true,
+      });
       console.log(err);
+    } finally {
+      // Reset submission state
+      setIsSubmitting(false);
     }
   };
+
+
 
   useEffect(() => {
     categoryApi();
@@ -427,10 +464,10 @@ export default function AdminPost() {
                       "help",
                       "wordcount",
                     ],
-                    image_dimensions: false,
-                    image_class_list: [
-                      { title: "Responsive", value: "img-responsive" },
-                    ],
+                    image_dimensions: true,
+                    // image_class_list: [
+                    //   { title: "Responsive", value: "img-responsive" },
+                    // ],
                     toolbar:
                       "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
                     content_style:
@@ -524,8 +561,17 @@ export default function AdminPost() {
                     ))}
                 </Form.Control>
               </Form.Group>
-
-              <Form.Group controlId="image_default" className="mb-3">
+              <Form.Group controlId="formKeywords" className="mb-3">
+                <Form.Label>Keywords</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter keywords"
+                  value={keywords}
+                  onChange={handleKeywordsChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="image_default" className="">
                 <Form.Label>Select Image</Form.Label>
 
                 <div {...getRootProps({ style })}>
@@ -547,19 +593,6 @@ export default function AdminPost() {
                   {files}
                   <ul>{fileRejectionItems}</ul>
                 </aside>
-              </Form.Group>
-
-              <Form.Group className="mb-4" controlId="schedule">
-                <Form.Label className="form-label">
-                  Schedule Date and Time
-                </Form.Label>
-                <Form.Control
-                  type="datetime-local"
-                  name="schedule"
-                  value={scheduledAt}
-                  onChange={(e) => setScheduledAt(e.target.value)}
-                  className="form-input"
-                />
               </Form.Group>
 
               <Form.Check
@@ -591,31 +624,42 @@ export default function AdminPost() {
                 onChange={() => toggleCheckbox(setIsBreaking)}
               />
 
-              <Form.Group controlId="formKeywords" className="mb-3">
-                <Form.Label>Keywords</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter keywords"
-                  value={keywords}
-                  onChange={handleKeywordsChange}
-                  required
-                />
-              </Form.Group>
+              <Form.Check
+                type="checkbox"
+                id="scheduleCheckbox"
+                label={isScheduled ? "Disable Schedule" : "Enable Schedule"}
+                checked={isScheduled}
+                onChange={() => setisScheduled(!isScheduled)}
+              />
+              {isScheduled && (
+                <Form.Group className="mt-3" controlId="schedule">
+                  <Form.Label className="form-label">
+                    Schedule Date and Time
+                  </Form.Label>
+                  <Form.Control
+                    type="datetime-local"
+                    name="schedule"
+                    value={scheduledAt}
+                    onChange={(e) => setScheduledAt(e.target.value)}
+                    className="form-input"
+                    required
+                  />
+                </Form.Group>
+              )}
             </Col>
           </Row>
           <Form.Check
             type="checkbox"
             id="draftCheckbox"
-            label={draft ? 'Disable Draft mode' : 'Enable Draft mode'}
+            label={draft ? "Disable Draft mode" : "Enable Draft mode"}
             checked={draft}
             className="text-danger mb-3"
             onChange={() => setDraft(!draft)}
           />
           <Button
             type="submit"
-            className={`${
-              draft ? "btn-danger" : "btn-primary"
-            } btn`}
+            disabled={isSubmitting}
+            className={`${draft ? "btn-danger" : "btn-primary"} btn`}
           >
             {draft ? "Save to Draft" : "Publish"}
           </Button>

@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
-import fs from 'fs';
-import path from 'path';
-import sharp from 'sharp';
-import db from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
+import fs from "fs";
+import path from "path";
+import sharp from "sharp";
+import db from "@/lib/db";
+import schedule from "node-schedule";
 
 export const config = {
   api: {
@@ -12,42 +13,65 @@ export const config = {
 };
 
 const currentDate = new Date();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const year = String(currentDate.getFullYear());
-  const folderName = `${year}${month}`;
+const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+const year = String(currentDate.getFullYear());
+const folderName = `${year}${month}`;
 
 export async function POST(req) {
   try {
     const formData = await req.formData();
-const title = formData.get('title');
-const content = formData.get('content')
-const summary = formData.get('summary')
-const category_id = formData.get('category_id')
-const keywords = formData.get('keywords')
-const tags = formData.get('tags')
-const is_slider = formData.get('is_slider')
-const is_featured = formData.get('is_featured')
-const is_recommended = formData.get('is_recommended')
-const is_breaking = formData.get('is_breaking')
-const user_id = 3
-const image_description = formData.get('image_description')
-const market = formData.get('market')
-const draftValue = formData.get('draft')
+    const title = formData.get("title");
+    const content = formData.get("content");
+    const summary = formData.get("summary");
+    const category_id = formData.get("category_id");
+    const keywords = formData.get("keywords");
+    const tags = formData.get("tags");
+    const is_slider = formData.get("is_slider");
+    const is_featured = formData.get("is_featured");
+    const is_recommended = formData.get("is_recommended");
+    const is_breaking = formData.get("is_breaking");
+    const user_id = 12;
+    const image_description = formData.get("image_description");
+    const market = formData.get("market");
+    const draftValue = formData.get("draft");
+    const scheduled = formData.get("schedule_time");
 
-const draft = draftValue == 'true' ? 0 : 1
+    const scheduleTime = (scheduled === null || scheduled === '' || scheduled === undefined) ? 0 : 1;
+    
+   
 
-const title_slug = title.split(" ").join("-");
+    const draft = draftValue == "true" ? 0 : 1;
 
-const tags_split = tags.split(",");
+
+
+    const title_slug = title.split(" ").join("-");
+
+    const tags_split = tags.split(",");
 
     const uploadedFiles = [];
     const primaryFolder = folderName;
 
     // Create upload directories for both folders
-    const primaryUploadDir = path.join(process.cwd(), 'public/uploads/images', primaryFolder);
-    
+    const primaryUploadDir = path.join(
+      process.cwd(),
+      "public/uploads/images",
+      primaryFolder
+    );
+
     if (!fs.existsSync(primaryUploadDir)) {
       fs.mkdirSync(primaryUploadDir, { recursive: true });
+
+      const htmlContent = `<!DOCTYPE html>
+          <html>
+          <head>
+            <title>403 Forbidden</title>
+          </head>
+          <body>
+            <p>Directory access is forbidden.</p>
+          </body>
+          </html>`;
+
+      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
     }
 
     // Array to hold files
@@ -59,7 +83,6 @@ const tags_split = tags.split(",");
         files.push(value);
       }
     }
-
 
     if (files.length > 0) {
       const firstFile = files[0];
@@ -80,8 +103,8 @@ const tags_split = tags.split(",");
       const image_default = `./public/uploads/images/${folderName}/${newFirstFilename}`;
 
       const image_big = `./public/uploads/images/${folderName}/750${newFirstFilename}`;
-    const image_small = `./public/uploads/images/${folderName}/140${newFirstFilename}`;
-    const image_mid = `./public/uploads/images/${folderName}/380${newFirstFilename}`;
+      const image_small = `./public/uploads/images/${folderName}/140${newFirstFilename}`;
+      const image_mid = `./public/uploads/images/${folderName}/380${newFirstFilename}`;
 
       const img_default = `uploads/images/${folderName}/${newFirstFilename}`;
       const img_big = `uploads/images/${folderName}/750${newFirstFilename}`;
@@ -110,15 +133,16 @@ const tags_split = tags.split(",");
         is_breaking,
         image_description,
         market,
-        draft
+        draft,
+        scheduleTime,
       ];
       const [postResult] = await db.execute(
         `
-        INSERT INTO posts (
-          title, title_slug, keywords, summary, content, category_id, image_big, image_default, 
-          image_mid, image_small, is_slider, is_featured, is_recommended, user_id,
-          is_breaking, image_description, market, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `,
+          INSERT INTO posts (
+            title, title_slug, keywords, summary, content, category_id, image_big, image_default, 
+            image_mid, image_small, is_slider, is_featured, is_recommended, user_id,
+            is_breaking, image_description, market, status, is_scheduled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `,
         postQuery
       );
 
@@ -132,42 +156,46 @@ const tags_split = tags.split(",");
         );
       }
 
+      if (scheduled) {
+        const publishTime = new Date(scheduled);
+        schedule.scheduleJob(publishTime, async function () {
+          await db.execute(`UPDATE posts SET is_scheduled = 0 WHERE id = ?`, [
+            postId,
+          ]);
+        });
+      }
     }
 
-
-
     // Handle remaining files (secondary files)
-    // if (files.length > 1) {
-    //   const remainingFiles = files.slice(1);
+    if (files.length > 1) {
+      const remainingFiles = files.slice(1);
 
-    //   for (const file of remainingFiles) {
-    //     const originalFilename = file.name;
-    //     const fileExtension = path.extname(originalFilename);
-    //     const newFilename = `${uuidv4()}${fileExtension}`;
-    //     const filePath = path.join(primaryUploadDir, newFilename);
+      for (const file of remainingFiles) {
+        const originalFilename = file.name;
+        const fileExtension = path.extname(originalFilename);
+        const newFilename = `${uuidv4()}${fileExtension}`;
+        const filePath = path.join(primaryUploadDir, newFilename);
 
-    //     // Save each remaining file
-    //     const fileBuffer = Buffer.from(await file.arrayBuffer());
-    //     fs.writeFileSync(filePath, fileBuffer);
+        // Save each remaining file
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
+        fs.writeFileSync(filePath, fileBuffer);
 
-    //     uploadedFiles.push({
-    //       originalFilename,
-    //       newFilename,
-    //       filePath: `/uploads/${primaryFolder}/${newFilename}`,
-    //     });
-    //   }
-
-      
-
-    // }
+        uploadedFiles.push({
+          originalFilename,
+          newFilename,
+          filePath: `/uploads/${primaryFolder}/${newFilename}`,
+        });
+      }
+    }
 
     return NextResponse.json({
-      message: 'Files uploaded successfully',
+      message: "Files uploaded successfully",
     });
-
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
-

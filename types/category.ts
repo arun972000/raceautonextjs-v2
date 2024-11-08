@@ -6,6 +6,8 @@ export type category = {
   category_order: number;
   block_type: string;
   show_at_homepage: number;
+  color:string;
+  parent:any;
 };
 
 export type catgeorypropType = {

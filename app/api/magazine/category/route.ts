@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -11,11 +11,17 @@ export async function GET() {
   }
 }
 
-
-export async function POST(){
-  try{
-
-  }catch(err){
-    console.log(err)
+export async function POST(req: NextRequest) {
+  const { title, color } = await req.json();
+  const title_slug = title.split(" ").join("-");
+  try {
+    await db.execute(
+      `INSERT INTO newsletter_category (title, title_slug, color) VALUES (?, ?, ?)`,
+      [title, title_slug, color]
+    );
+    return NextResponse.json("category added");
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ err: "internal server error" }, { status: 500 });
   }
 }

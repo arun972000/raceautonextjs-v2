@@ -1,8 +1,9 @@
 import React from 'react'
+import SubscriptionTable from './table'
 
 const page = () => {
   return (
-    <div>page</div>
+    <SubscriptionTable/>
   )
 }
 

@@ -250,7 +250,7 @@ export default function AdminPost() {
 
     try {
       const subCategoryRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/${category_main}`
+        `${process.env.BACKEND_URL}api/category/sub-category/parent/${category_main}`
       );
       setSubCategory_array(subCategoryRes.data); // Set subcategory data if API call is successful
     } catch (err) {

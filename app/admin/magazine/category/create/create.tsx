@@ -1,8 +1,8 @@
+'use client'
 import axios from "axios";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Create_newsLetterCategory = () => {
   const [title, setTitle] = useState("");
@@ -11,7 +11,7 @@ const Create_newsLetterCategory = () => {
   const createApi = async () => {
     try {
       await axios.post(
-        `${process.env.BACKEND_URL}api/newsletter/create-newsletter_category`,
+        `${process.env.BACKEND_URL}api/magazine/category`,
         { title, color }
       );
       toast.success("Category created!", {

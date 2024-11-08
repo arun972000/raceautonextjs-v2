@@ -290,7 +290,7 @@ const ArticleEdit = () => {
   const subCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/${categoryMain}`
+        `${process.env.BACKEND_URL}api/category/sub-category/parent/${categoryMain}`
       );
       setSubCategoryArray(res.data);
     } catch (err) {
@@ -609,8 +609,6 @@ const ArticleEdit = () => {
               checked={isRecommended === 1}
               onChange={handleCheckboxChange}
             />
-
-            
 
             <Form.Group controlId="image_default" className="mb-3">
               <Form.Label>Select Image</Form.Label>

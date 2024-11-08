@@ -84,19 +84,19 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/magazine" className="nav-link px-0">
                   <MdEventAvailable />{" "}
                   <span className="d-none d-sm-inline">Magazines</span>
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/magazine/category" className="nav-link px-0">
                   <FaSitemap />{" "}
                   <span className="d-none d-sm-inline">Category</span>
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/magazine/ad" className="nav-link px-0">
                   <FaAdversal />{" "}
                   <span className="d-none d-sm-inline">Magazine Ad</span>
                 </Link>
@@ -104,13 +104,13 @@ const AdminSidebar = async () => {
             </ul>
           </li>
           <li>
-            <Link href="#" className="nav-link px-0 align-middle">
+            <Link href="/admin/page" className="nav-link px-0 align-middle">
               <RiPagesFill />{" "}
               <span className="ms-1 d-none d-sm-inline">Pages</span>
             </Link>
           </li>
           <li>
-            <Link href="#" className="nav-link px-0 align-middle">
+            <Link href="/admin/subscription" className="nav-link px-0 align-middle">
               <MdPriceChange />{" "}
               <span className="ms-1 d-none d-sm-inline">Subscription</span>
             </Link>
@@ -130,13 +130,13 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/event" className="nav-link px-0">
                   <MdOutlineEventAvailable />{" "}
                   <span className="d-none d-sm-inline">Events</span>
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/event/settings" className="nav-link px-0">
                   <MdOutlineDisplaySettings />{" "}
                   <span className="d-none d-sm-inline">Settings</span>
                 </Link>
@@ -158,7 +158,7 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/article" className="nav-link px-0">
                   <GrArticle />{" "}
                   <span className="d-none d-sm-inline">Articles</span>
                 </Link>
@@ -187,10 +187,22 @@ const AdminSidebar = async () => {
                   <span className="d-none d-sm-inline">Featured</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/admin/article/draft" className="nav-link px-0">
+                  <MdFeaturedPlayList />{" "}
+                  <span className="d-none d-sm-inline">Draft</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/article/schedule" className="nav-link px-0">
+                  <MdFeaturedPlayList />{" "}
+                  <span className="d-none d-sm-inline">Schedule</span>
+                </Link>
+              </li>
             </ul>
           </li>
           <li>
-            <Link href="#" className="nav-link px-0 align-middle">
+            <Link href="/admin/market" className="nav-link px-0 align-middle">
               <AiOutlineGlobal />{" "}
               <span className="ms-1 d-none d-sm-inline">Market</span>{" "}
             </Link>
@@ -210,13 +222,13 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/category/main-category" className="nav-link px-0">
                   <TbCategoryMinus />{" "}
                   <span className="d-none d-sm-inline">Main</span>
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/category/sub-category" className="nav-link px-0">
                   <TbCategoryPlus />{" "}
                   <span className="d-none d-sm-inline">Sub</span>
                 </Link>
@@ -238,7 +250,7 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/user" className="nav-link px-0">
                   <FaUsers /> <span className="d-none d-sm-inline">Users</span>
                 </Link>
               </li>

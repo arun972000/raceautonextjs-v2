@@ -1,8 +1,9 @@
 import React from 'react'
+import EventSettings from './settings'
 
 const page = () => {
   return (
-    <div>page</div>
+   <EventSettings/>
   )
 }
 

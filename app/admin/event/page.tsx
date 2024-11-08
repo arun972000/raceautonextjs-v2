@@ -1,8 +1,9 @@
 import React from 'react'
+import EventTable from './table'
 
 const page = () => {
   return (
-    <div>page</div>
+    <EventTable/>
   )
 }
 

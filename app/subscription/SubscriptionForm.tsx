@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import scanner from "@/public/upi scanner.png";
-import Image from "next/image";
+
 
 const SubscriptionForm = () => {
   const [formData, setFormData] = useState({

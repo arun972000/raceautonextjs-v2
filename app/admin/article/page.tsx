@@ -1,5 +1,5 @@
 import React from "react";
-import ArticleList from "../../components/Post/ArticleList";
+import ArticleList from "../components/Post/ArticleList";
 
 const page = (context: { searchParams: { page: string } }) => {
   const page = context.searchParams.page;

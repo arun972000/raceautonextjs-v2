@@ -1,9 +1,9 @@
+import Authorize from '@/components/Authorize'
 import React from 'react'
-import Magazine from './magazine'
 
 const page = () => {
   return (
-    <Magazine/>
+    <Authorize/>
   )
 }
 

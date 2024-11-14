@@ -1,4 +1,5 @@
 import db from "@/lib/db";
+import { RowDataPacket } from "mysql2";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -33,5 +34,21 @@ export async function PUT(req: NextRequest) {
   } catch (err) {
     console.log(err);
     return NextResponse.json({ message: "internal server error" });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const { pathname } = new URL(req.url);
+  const id = pathname.split("/").pop();
+  try {
+    await db.execute("DELETE FROM post_market WHERE id = ?", [id]);
+
+    return NextResponse.json({ message: "post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

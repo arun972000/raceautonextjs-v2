@@ -3,6 +3,8 @@ import React from "react";
 import {
   FaAd,
   FaAdversal,
+  FaAngleDown,
+  FaArrowRight,
   FaHome,
   FaSitemap,
   FaThList,
@@ -40,10 +42,7 @@ const AdminSidebar = async () => {
       className="col-2 col-sm-4 col-md-3 col-xl-2 shadow bg-light admin-sidebar"
       style={{ padding: 0 }}
     >
-      <div
-        className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 mt-2"
-        
-      >
+      <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 mt-2">
         <div style={{ borderBottom: "1px solid black" }} className="mb-2">
           <Link
             href="/"
@@ -61,7 +60,7 @@ const AdminSidebar = async () => {
         <ul
           className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
           id="menu"
-          
+          style={{width:'100%'}}
         >
           <li className="nav-item ">
             <Link href="/admin" className="nav-link align-middle px-0">
@@ -110,7 +109,10 @@ const AdminSidebar = async () => {
             </Link>
           </li>
           <li>
-            <Link href="/admin/subscription" className="nav-link px-0 align-middle">
+            <Link
+              href="/admin/subscription"
+              className="nav-link px-0 align-middle"
+            >
               <MdPriceChange />{" "}
               <span className="ms-1 d-none d-sm-inline">Subscription</span>
             </Link>
@@ -222,13 +224,19 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="/admin/category/main-category" className="nav-link px-0">
+                <Link
+                  href="/admin/category/main-category"
+                  className="nav-link px-0"
+                >
                   <TbCategoryMinus />{" "}
                   <span className="d-none d-sm-inline">Main</span>
                 </Link>
               </li>
               <li>
-                <Link href="/admin/category/sub-category" className="nav-link px-0">
+                <Link
+                  href="/admin/category/sub-category"
+                  className="nav-link px-0"
+                >
                   <TbCategoryPlus />{" "}
                   <span className="d-none d-sm-inline">Sub</span>
                 </Link>
@@ -262,14 +270,26 @@ const AdminSidebar = async () => {
               </li>
             </ul>
           </li>
-          <li>
-            <Link
+          <li style={{width:'100%'}}>
+            {/* <Link
               href="#admenu"
               data-bs-toggle="collapse"
               className="nav-link px-0 align-middle "
             >
-              <RiAdvertisementFill />{" "}
+              <RiAdvertisementFill />
               <span className="ms-1 d-none d-sm-inline">Ad</span>
+            </Link> */}
+            <Link
+              href="#admenu"
+              data-bs-toggle="collapse"
+              className="nav-link px-0 align-middle d-flex align-items-center"
+
+            >
+              <RiAdvertisementFill />
+              <span className="ms-1 d-none d-sm-inline">Ad</span>
+              <span className="d-none d-sm-inline ms-auto">
+              <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"

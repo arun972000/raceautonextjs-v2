@@ -7,6 +7,30 @@
   transition: all 1.3s ease;
 }
 
+/* Define the fade-in effect */
+/* Define the zoom-in effect */
+/* Shrink to Grow Effect */
+/* Grow Effect */
+@keyframes growEffect {
+  0% {
+    transform: scale(0.5); /* Start smaller */
+    opacity: 0;  /* Initially hidden */
+  }
+  100% {
+    transform: scale(1); /* End at normal size */
+    opacity: 1;  /* Fully visible */
+  }
+}
+
+/* Apply the grow effect to the envelope */
+.wrapper {
+  animation: growEffect 1.5s ease-in-out;
+}
+
+
+
+
+
 .default-margin {
   margin-top: 175px;
 }

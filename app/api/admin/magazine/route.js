@@ -73,7 +73,7 @@ export async function POST(req) {
       const image = `uploads/newsletter/${folderName}/${newImageName}`;
       const pdf = `uploads/newsletter/${folderName}/${newPdfName}`;
       const [results] = await db.execute(
-        "INSERT INTO newsletter (title, title_slug, image_url, created_date, modified_date, category, created_by, keywords, modified_by, pdf_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO newsletter (title, title_slug, image_url, created_date, modified_date, category, created_by, keywords, modified_by, pdf_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
           title,
           title_slug,

@@ -3,6 +3,7 @@ import PostSlider from "./Slider";
 import Link from "next/link";
 import SocialButton from "./SocialButton";
 import { formatDate } from "@/components/Time";
+import PostContent from "./postContent";
 
 export type postsliderType = {
   image_default: string;
@@ -54,7 +55,7 @@ const Post = async ({ title }: { title: string }) => {
         >
           {post.image_description}
         </p>
-        <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+       <PostContent content={post.content}/>
         {post.tag.map((item) => (
           <Link href="/tag" className="badge badge-info mr-3" key={item.id}>
             {item.tag}

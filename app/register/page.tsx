@@ -1,9 +1,9 @@
 import React from 'react'
-import Magazine from './magazine'
+import SignupForm from './signup'
 
 const page = () => {
   return (
-    <Magazine/>
+    <SignupForm/>
   )
 }
 

@@ -71,10 +71,13 @@ const MarketList = () => {
         onHide={() => setSmShow(false)}
         aria-labelledby="example-modal-sizes-title-sm"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">Are you sure you want to delete this Category?</Modal.Title>
+        <Modal.Header closeButton className="bg-danger text-white">
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Delete Confirmation
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p>Are you sure you want to delete this item?</p>
           <div className="d-flex justify-content-evenly">
             <button
               className="btn btn-secondary"
@@ -82,7 +85,7 @@ const MarketList = () => {
             >
               cancel
             </button>
-            <button className="btn btn-danger" onClick={handleDelete}>
+            <button className="btn btn-warning" onClick={handleDelete}>
               Yes
             </button>
           </div>
@@ -123,7 +126,9 @@ const MarketList = () => {
                       setSmShow(true);
                       setDeleteId(item.id);
                     }}>
-                      <MdDelete size={20} />
+                       <MdDelete
+                    size={20}
+                  />
                     </button>
                   </td>
                 </tr>

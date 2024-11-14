@@ -16,7 +16,9 @@ const Contact = async () => {
 
   return (
     <>
+    <div className="container-fluid">
       <Content data={data[0]} />
+      </div>
     </>
   );
 };

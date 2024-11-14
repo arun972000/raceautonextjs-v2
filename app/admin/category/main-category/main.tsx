@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdCreateNewFolder, MdDelete, MdModeEdit } from "react-icons/md";
@@ -24,33 +24,28 @@ const Main_Category = () => {
   };
 
   const handleDelete = async () => {
+    setSmShow(false);
+    const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/category/delete-category/${deleteId}`
+        `${process.env.BACKEND_URL}api/category/main-category/${deleteId}`
       );
-      toast.success("Category Deleted", {
-        position: "top-right",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      toast.update(toastId, {
+        render: "Successfully removed!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
       });
+
       MainCategoryApi();
-      setSmShow(false);
     } catch (err) {
-      toast.error("try again later", {
-        position: "top-right",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      toast.update(toastId, {
+        render: "Failed to remove!",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
       });
       console.log(err);
-      setSmShow(false);
     }
   };
 
@@ -65,12 +60,13 @@ const Main_Category = () => {
         onHide={() => setSmShow(false)}
         aria-labelledby="example-modal-sizes-title-sm"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">
-            Are you sure you want to delete this Category?
+        <Modal.Header closeButton className="bg-danger text-white">
+          <Modal.Title id="example-modal-sizes-title-sm" >
+            Delete Confirmation
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p>Are you sure you want to delete this Category?</p>
           <div className="d-flex justify-content-evenly">
             <button
               className="btn btn-secondary"
@@ -78,7 +74,7 @@ const Main_Category = () => {
             >
               cancel
             </button>
-            <button className="btn btn-danger" onClick={handleDelete}>
+            <button className="btn btn-warning" onClick={handleDelete}>
               Yes
             </button>
           </div>
@@ -96,7 +92,6 @@ const Main_Category = () => {
             <thead className="bg-light">
               <tr>
                 <th>Category Name</th>
-
                 <th>Color</th>
                 <th>Action</th>
               </tr>

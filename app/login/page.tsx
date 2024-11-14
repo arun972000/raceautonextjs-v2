@@ -1,9 +1,9 @@
 import React from 'react'
-import Magazine from './magazine'
+import LoginForm from './login'
 
 const page = () => {
   return (
-    <Magazine/>
+    <LoginForm/>
   )
 }
 

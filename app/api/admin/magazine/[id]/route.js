@@ -32,8 +32,6 @@ export async function GET(req) {
   }
 }
 
-
-
 export async function PUT(req) {
   try {
     const { pathname } = new URL(req.url);
@@ -112,5 +110,42 @@ export async function PUT(req) {
   } catch (err) {
     console.log(err);
     return NextResponse.json({ err: "internal server error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(req) {
+  const { pathname } = new URL(req.url);
+  const id = pathname.split("/").pop();
+  try {
+    const [rows] = await db.execute(
+      "SELECT pdf_url, image_url FROM newsletter WHERE id = ?",
+      [id]
+    );
+    const pdfPath = `public/${rows[0].pdf_url}`;
+    const imagePath = `public/${rows[0].image_url}`;
+    console.log(pdfPath)
+    console.log(imagePath)
+    await db.execute(`DELETE FROM newsletter WHERE id = ${id}`);
+    fs.unlink(pdfPath, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+      } else {
+        console.log("File deleted successfully.");
+      }
+    });
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+      } else {
+        console.log("File deleted successfully.");
+      }
+    });
+    return NextResponse.json({ message: "recorded and deleted successfully" });
+  } catch (err) {
+    console.error("Error submitting form:", err);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

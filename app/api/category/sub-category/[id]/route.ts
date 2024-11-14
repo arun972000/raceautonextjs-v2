@@ -61,3 +61,16 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ err }, { status: 500 });
   }
 }
+
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { pathname } = new URL(req.url);
+    const id = pathname.split("/").pop();
+    await db.execute("DELETE FROM categories WHERE id = ?", [id]);
+    return NextResponse.json("deleted category");
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ err: "internal server error" }, { status: 500 });
+  }
+}

@@ -16,15 +16,19 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const [isLogin, setIslogin] = useState(false)
   const [error, setError] = useState("");
 
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError(""); // Clear previous error messages
-      const response = await axios.post("/api/login", values);
-      console.log("Login successful", response.data); // Handle successful login here
-      // Redirect to dashboard or perform further actions
+      await axios.post("/api/login", values);
+      setIslogin(true)
+      setTimeout(() => {
+
+        setIslogin(false)
+    }, 2000);
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
@@ -48,7 +52,7 @@ const LoginForm = () => {
         <Col md={6} lg={3}>
           <div className="login-box p-4">
             <div className="text-center mb-4">
-              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={60}/>
+              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={60} />
               <h2 className="mt-2">Login</h2>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}

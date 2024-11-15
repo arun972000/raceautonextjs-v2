@@ -1,7 +1,9 @@
 import React from 'react'
 import LoginForm from './login'
+import { cookies } from 'next/headers'
 
-const page = () => {
+const page = async() => {
+
   return (
     <LoginForm/>
   )

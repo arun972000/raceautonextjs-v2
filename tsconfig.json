@@ -29,6 +29,6 @@
     "components/HomeCategories/Varients/Varient 3/Varient3.jsx",
     "app/magazine/[title_slug]/FlipBook.jsx",
     "components/BootstrapClient.js"
-, "app/api/admin/post/create/route.js", "app/api/admin/post/edit/[id]/route.js", "app/api/admin/magazine/[id]/route.js", "app/api/admin/magazine/route.js", "app/api/magazine-ad/route.js", "app/api/admin/event/[id]/route.js", "app/api/admin/event/route.js", "app/api/admin/event/settings/route.js", "app/api/admin/user/[id]/route.js", "app/api/login/route.js", "app/login/login.jsx", "app/register/signup.jsx"  ],
+, "app/api/admin/post/create/route.js", "app/api/admin/post/edit/[id]/route.js", "app/api/admin/magazine/[id]/route.js", "app/api/admin/magazine/route.js", "app/api/magazine-ad/route.js", "app/api/admin/event/[id]/route.js", "app/api/admin/event/route.js", "app/api/admin/event/settings/route.js", "app/api/admin/user/[id]/route.js", "app/api/login/route.js", "app/login/login.jsx", "app/register/signup.jsx", "app/api/admin/adspace/[title]/route.js"  ],
   "exclude": ["node_modules"]
 }

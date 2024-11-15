@@ -4,13 +4,43 @@
   margin: 0;
 }
 
+/* Light Theme */
+html.light {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+}
+
+/* Dark Theme */
+html.dark {
+  --bg-color: #212529;
+  --text-color: #f8f9fa;
+}
+
+/* Apply to Bootstrap components */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.btn {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-color: var(--text-color);
+}
+
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
 .main_content__position {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--bg-color);
   min-height: 100vh;
   padding-top: 0;
   position: relative;

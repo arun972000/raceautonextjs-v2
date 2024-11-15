@@ -6,12 +6,14 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import ThemeToggle from "@/components/NextThemes";
 
 export default function Home() {
   return (
     <main className="">
       <BreakingNews />
       <Navbar />
+      <ThemeToggle />
       <div className="main_content__position">
         <div className="container">
           <HomeBanner />

@@ -106,7 +106,7 @@ const Main_Category = () => {
                   </td>
                   <td>
                     <Link
-                      href={`/admin/categories/edit-mainCategory/${item.id}`}
+                      href={`/admin/category/main-category/${item.id}`}
                     >
                       <button className="btn btn-primary me-3">
                         <MdModeEdit size={20} />

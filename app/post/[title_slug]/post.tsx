@@ -4,6 +4,7 @@ import Link from "next/link";
 import SocialButton from "./SocialButton";
 import { formatDate } from "@/components/Time";
 import PostContent from "./postContent";
+import { NOTFOUND } from "dns";
 
 export type postsliderType = {
   image_default: string;

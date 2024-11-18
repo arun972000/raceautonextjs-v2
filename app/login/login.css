@@ -1,7 +1,7 @@
 /* LoginForm.css */
 
 .login-container {
-    background: url('/images/login-bg.gif') no-repeat center center;
+    background: url('/images/car login v2.gif') no-repeat center center;
     min-height: 100vh;
     background-size: cover;
 
@@ -11,5 +11,6 @@
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color:black
   }
   

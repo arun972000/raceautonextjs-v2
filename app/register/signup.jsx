@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client'
 import React, { useState } from "react";
 import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
@@ -8,12 +7,20 @@ import axios from "axios";
 import Image from "next/image";
 import './signup.css'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-// Validation schema for form fields
+// Validation schema for form fields with strong password
 const validationSchema = Yup.object().shape({
   username: Yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
   email: Yup.string().email("Invalid email address").required("Email is required"),
-  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[@$!%*?&]/, "Password must contain at least one special character: @$!%*?&")
+    .required("Password is required"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], "Passwords must match")
     .required("Confirm password is required"),
@@ -21,14 +28,24 @@ const validationSchema = Yup.object().shape({
 
 const SignupForm = () => {
   const [error, setError] = useState("");
+  const router = useRouter()
 
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError(""); // Clear previous error messages
-      const response = await axios.post("/api/register", values);
-      console.log("Signup successful", response.data); // Handle successful signup here
-      // Redirect to login or perform further actions
+      await axios.post("/api/register", values);
+      toast.success("User Registered Successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      router.push('/login')
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
@@ -52,7 +69,7 @@ const SignupForm = () => {
         <Col md={6} lg={3}>
           <div className="signup-box p-4">
             <div className="text-center mb-4">
-              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={60}/>
+              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={70} />
               <h2 className="mt-2">Sign Up</h2>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -115,7 +132,7 @@ const SignupForm = () => {
                     {isSubmitting ? "Signing up..." : "Sign Up"}
                   </Button>
                   <div className="text-center mt-3">
-                    <span>Already have an account? </span><Link href="/login">Login</Link>
+                    <span>Already have an account? </span><Link href="/login" className="text-primary">Login</Link>
                   </div>
                 </Form>
               )}

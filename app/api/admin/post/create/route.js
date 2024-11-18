@@ -6,12 +6,6 @@ import sharp from "sharp";
 import db from "@/lib/db";
 import schedule from "node-schedule";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable the default body parser
-  },
-};
-
 const currentDate = new Date();
 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
 const year = String(currentDate.getFullYear());

@@ -27,11 +27,6 @@ body {
   color: var(--text-color);
 }
 
-.btn {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  border-color: var(--text-color);
-}
 
 
 a {

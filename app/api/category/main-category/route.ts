@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const query = `
       SELECT id, name, name_slug, description, keywords, show_at_homepage, 
-             show_on_menu, color, block_type 
+             show_on_menu, color, block_type, category_order 
       FROM categories 
       WHERE parent_id = 0
     `;

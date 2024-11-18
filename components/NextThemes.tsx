@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import "@/styles/toggle.css"
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -15,17 +16,14 @@ export default function ThemeToggle() {
   if (!mounted) return null;
 
   return (
-    <div className="mt-3">
-      <p>Current Theme: {theme}</p>
-      <Button variant="secondary" onClick={() => setTheme('light')}>
-        Light Mode
-      </Button>{' '}
-      <Button variant="dark" onClick={() => setTheme('dark')}>
-        Dark Mode
-      </Button>{' '}
-      <Button variant="outline-primary" onClick={() => setTheme('system')}>
-        System Mode
+
+      <Button
+        variant="outline-light"
+        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        className="theme-toggle-button mx-3"
+      >
+        {theme === 'light' ? '🌞' : '🌜'}
       </Button>
-    </div>
+
   );
 }

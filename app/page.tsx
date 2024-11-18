@@ -6,16 +6,20 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import ThemeToggle from "@/components/NextThemes";
+import Image from "next/image";
+import HeaderAd from "@/components/HeaderAd/HeaderAd";
 
-export default function Home() {
+export default async function Home() {
+
+
   return (
     <main className="">
       <BreakingNews />
       <Navbar />
-      <ThemeToggle />
+
       <div className="main_content__position">
         <div className="container">
+  <HeaderAd/>
           <HomeBanner />
           <MagazineAd />
           <div className="row mt-4">

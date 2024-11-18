@@ -12,6 +12,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaXTwitter } from "react-icons/fa6";
+import Link from "next/link";
 
 function ProfileDashboard({ token }: { token: string }) {
   const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ function ProfileDashboard({ token }: { token: string }) {
       setAboutme(res.data[0].about_me || "");
       setInstagram(res.data[0].instagram_url || "");
       setFacebook(res.data[0].facebook_url || "");
-      setLinkedin(res.data[0].lindein_url || "");
+      setLinkedin(res.data[0].linkedin_url || "");
       setTwitter(res.data[0].twitter_url || "");
     } catch (err) {
       console.log(err);
@@ -48,7 +49,7 @@ function ProfileDashboard({ token }: { token: string }) {
   return (
     <Row className="">
       {/* Subscription Card */}
-      <Col md={6}>
+      <Col md={6} className="mb-3 mb-lg-0">
         <Card className="p-3 shadow-sm rounded-3">
           <Card.Body>
             <Card.Title className="text-center">Subscription</Card.Title>
@@ -65,7 +66,7 @@ function ProfileDashboard({ token }: { token: string }) {
       </Col>
 
       {/* Plan Subscription & Validity Card */}
-      <Col md={6}>
+      <Col md={6} className="mb-3 mb-lg-0">
         <Card className="p-3 shadow-sm rounded-3">
           <Card.Body>
             <Card.Title className="text-center">
@@ -85,7 +86,7 @@ function ProfileDashboard({ token }: { token: string }) {
       </Col>
 
       {/* Profile Card */}
-      <Col md={6}>
+      <Col md={6} className="mb-3 mb-lg-0">
         <Card className="p-3 shadow-sm rounded-3">
           <Card.Body>
             <Card.Title className="text-center">Profile</Card.Title>
@@ -99,7 +100,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   className="me-2"
                 />
 
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
               <div className="d-flex align-items-center my-3">
                 <Form.Control
@@ -109,7 +110,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={email}
                   className="me-2"
                 />
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
               <div className="d-flex align-items-center my-3">
                 <Form.Control
@@ -119,7 +120,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={aboutme}
                   className="me-2"
                 />
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
             </Form>
           </Card.Body>
@@ -141,7 +142,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={facebook}
                   className="me-2"
                 />{" "}
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaInstagram size={24} className="me-2" />{" "}
@@ -152,7 +153,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   disabled
                   className="me-2"
                 />{" "}
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaXTwitter size={24} className="me-2" />{" "}
@@ -163,7 +164,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={twitter}
                   className="me-2"
                 />{" "}
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaLinkedin size={24} className="me-2" />{" "}
@@ -174,7 +175,7 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={linkedin}
                   className="me-2"
                 />{" "}
-                <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
               </div>
             </div>
           </Card.Body>

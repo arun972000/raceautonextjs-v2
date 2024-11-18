@@ -6,6 +6,9 @@ import SearchBarServer from "../SearchBar/SearchBarServer";
 import Image from "next/image";
 import MobileNavbar from "./MobileNavbar";
 import { category } from "@/types/category";
+import { marketType } from "@/app/admin/market/market";
+import ThemeToggle from "../NextThemes";
+import LoginNavButton from "../Navbuttons/LoginNavButton";
 
 export type mainMenu = {
   id: number;
@@ -18,7 +21,7 @@ export type mainMenu = {
 
 const Navbar = async () => {
   const resposne = await fetch(
-    `${process.env.BACKEND_URL}api/category/main-category`
+    `${process.env.BACKEND_URL}api/category/main-category`,{cache:'no-store'}
   );
 
   const data: category[] = await resposne.json();
@@ -26,6 +29,9 @@ const Navbar = async () => {
   const logoResponse = await fetch(
     `${process.env.BACKEND_URL}api/general-settings/logo`
   );
+  const marketResponse = await fetch(`${process.env.BACKEND_URL}api/market`);
+
+  const marketData = await marketResponse.json();
 
   const logoData = await logoResponse.json();
 
@@ -43,6 +49,8 @@ const Navbar = async () => {
   const Main_Category = data
     .filter((item) => item.show_on_menu == 1)
     .sort((a, b) => a.category_order - b.category_order);
+
+
 
   return (
     <div className={styles.navPosition}>
@@ -83,6 +91,33 @@ const Navbar = async () => {
                   >
                     <span>HOME</span>
                   </Link>
+                </li>
+                <li
+                  className={`${styles.dropdown} ${styles.nav_item} nav-item dropdown mx-1`}
+                >
+                  <button
+                    className={`${styles.dropdown_toggle} ${styles.nav_link} nav-link dropdown-toggle`}
+                    id="navbarDropdown"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    MARKET
+                  </button>
+                  <div
+                    className={`${styles.dropdown_menu_custom} dropdown-menu`}
+                    aria-labelledby="navbarDropdown"
+                  >
+                    {marketData.map((item: marketType) => (
+                      <Link
+                        key={item.id}
+                        className={`${styles.dropdown_item} dropdown-item`}
+                        href={`/market/${item.title_slug}`}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
                 </li>
                 {Main_Category.map((item) => {
                   return (
@@ -142,14 +177,23 @@ const Navbar = async () => {
             </div>
           </div>
           <div className={styles.header_icons}>
+            <div className="d-flex align-items-center">
+            <ThemeToggle/>
             <Link href="/subscription">
               <button className={styles.subscribeButton}>Subscribe</button>
             </Link>
             <SearchBarServer />
+            <LoginNavButton/>
+            </div>
+           
           </div>
         </div>
       </nav>
-      <MobileNavbar logoData={logoData[0]} morePagefiltered={morePagefiltered} Main_Category={Main_Category}/>
+      <MobileNavbar
+        logoData={logoData[0]}
+        morePagefiltered={morePagefiltered}
+        Main_Category={Main_Category}
+      />
     </div>
   );
 };

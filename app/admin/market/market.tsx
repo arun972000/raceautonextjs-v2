@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Link from "next/link";
 
-type marketType ={
+export type marketType ={
     id:number;
     title:string;
     title_slug:string;

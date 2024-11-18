@@ -44,10 +44,11 @@ const ExcelUpload = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-      'application/vnd.ms-excel': ['.xls'],
-    },
+    // accept: {
+    //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+    //   'application/vnd.ms-excel': ['.xls'],
+    // },
+    accept: {},
   });
 
   return (

@@ -13,9 +13,14 @@ const MainComponent = async () => {
   const showOnHome = data.filter((item) => item.show_at_homepage == 1);
 
   const adTopres = await fetch(
-    `${process.env.BACKEND_URL}api/admin/adspace/index_bottom`
+    `${process.env.BACKEND_URL}api/admin/adspace/index_top`
   );
   const adTopData = await adTopres.json();
+
+  const adBottomres = await fetch(
+    `${process.env.BACKEND_URL}api/admin/adspace/index_bottom`
+  );
+  const adBottomData = await adBottomres.json();
 
   return (
     <>
@@ -31,6 +36,15 @@ const MainComponent = async () => {
       {showOnHome.map((item) => (
         <HomeCategories key={item.id} item={item} />
       ))}
+      <div
+        style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
+      >
+        <Image
+          src={`${process.env.BACKEND_URL}${adBottomData[0].ad_code_728}`}
+          alt="index Bottom"
+          fill
+        />
+      </div>
     </>
   );
 };

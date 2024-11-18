@@ -8,6 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import './login.css'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Validation schema for form fields
 const validationSchema = Yup.object().shape({
@@ -16,19 +17,17 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  const [isLogin, setIslogin] = useState(false)
+  const router = useRouter()
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  
 
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError(""); // Clear previous error messages
       await axios.post("/api/login", values);
-      setIslogin(true)
-      setTimeout(() => {
-
-        setIslogin(false)
-    }, 2000);
+router.push('/')
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
@@ -52,7 +51,7 @@ const LoginForm = () => {
         <Col md={6} lg={3}>
           <div className="login-box p-4">
             <div className="text-center mb-4">
-              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={60} />
+              <Image src="/images/black logo with text.png" alt="Logo" width={60} height={70} />
               <h2 className="mt-2">Login</h2>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -78,7 +77,7 @@ const LoginForm = () => {
                   <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       name="password"
                       value={values.password}
                       onChange={handleChange}
@@ -94,7 +93,7 @@ const LoginForm = () => {
                     {isSubmitting ? "Logging in..." : "Login"}
                   </Button>
                   <div className="text-center mt-3">
-                    <span>Don't have an account? </span><Link href="/register">Signup</Link>
+                    <span>Don't have an account? </span><Link href="/register" className="text-primary">Signup</Link>
                   </div>
                 </Form>
               )}

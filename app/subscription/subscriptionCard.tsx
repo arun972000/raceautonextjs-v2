@@ -34,7 +34,6 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
 
   return (
     <>
-      <SubscriptionForm />
       <div className={`${montserrat.className} row justify-content-center`}>
         <div className="col-md-8 text-center">
           <h3 className="mt-3 font-weight-medium mb-1">
@@ -261,11 +260,11 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
             </div>
           </div>
         </div>
-        <div className="row justify-content-center">
+        {/* <div className="row justify-content-center">
           <div className="col-12">
             <InfoBox />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

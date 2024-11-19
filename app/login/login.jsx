@@ -9,6 +9,7 @@ import Image from "next/image";
 import './login.css'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 // Validation schema for form fields
 const validationSchema = Yup.object().shape({
@@ -20,14 +21,27 @@ const LoginForm = () => {
   const router = useRouter()
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
+
 
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setError(""); // Clear previous error messages
       await axios.post("/api/login", values);
-router.push('/')
+      toast.info('🦄 Wow so easy!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        router.push('/')
+        router.refresh()
+      }, 1000);
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
@@ -38,6 +52,7 @@ router.push('/')
           setError("An unexpected error occurred. Please try again.");
         }
       } else {
+        console.log(error)
         setError("Network error. Please check your internet connection.");
       }
     } finally {
@@ -89,7 +104,7 @@ router.push('/')
                   <div className="text-end mb-3">
                     <a href="/forgot-password" className="text-muted">Forgot Password?</a>
                   </div>
-                  <Button variant="primary" type="submit" disabled={isSubmitting} className="w-100">
+                  <Button variant="primary" type="submit" className="w-100">
                     {isSubmitting ? "Logging in..." : "Login"}
                   </Button>
                   <div className="text-center mt-3">

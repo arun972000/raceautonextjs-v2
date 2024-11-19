@@ -1,5 +1,7 @@
+"use client";
+import Image from "next/image";
 import React, { useState } from "react";
-
+import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 
 const SubscriptionForm = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,8 @@ const SubscriptionForm = () => {
     phone_number: "",
   });
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -17,131 +21,157 @@ const SubscriptionForm = () => {
     });
   };
 
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
   return (
-    <div
-      className="modal fade"
-      id="exampleModal"
-      tabIndex={-1}
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="container shadow my-5 p-4">
-            <h1 className="text-center mb-4">Subscription Form</h1>
-            <form>
-              <div className="row mb-3">
-                <div className="col-md-3">
-                  <div className="form-group">
-                    <label htmlFor="formTitle">Title</label>
-                    <select
-                      className="form-control"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      required
-                      id="formTitle"
-                    >
-                      <option value="">Select...</option>
-                      <option value="Mr">Mr</option>
-                      <option value="Ms">Ms</option>
-                      <option value="Mrs">Mrs</option>
-                      <option value="Dr">Dr</option>
-                    </select>
-                  </div>
-                </div>
+    <>
+      {/* Subscribe Button */}
+      <Button variant="danger" onClick={handleShow}>
+        Subscribe
+      </Button>
 
-                <div className="col-md-9">
-                  <div className="form-group">
-                    <label htmlFor="formName">Name</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Enter your name"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      required
-                      id="formName"
-                    />
-                  </div>
-                </div>
-              </div>
+      {/* Modal for Subscription Form */}
+      <Modal size="lg" show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Subscription Form</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <div className="row">
+              <div className="col-md-6">
+                <Row className="mb-3">
+                  <Col xs={3}>
+                    <Form.Group controlId="formTitle">
+                      <Form.Label>Title</Form.Label>
+                      <Form.Select
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select...</option>
+                        <option value="Mr">Mr</option>
+                        <option value="Ms">Ms</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Dr">Dr</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
 
-              <div className="form-group mb-3">
-                <label htmlFor="formEmail">Email</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  placeholder="Enter your email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  id="formEmail"
-                />
-              </div>
+                  <Col xs={9}>
+                    <Form.Group controlId="formName">
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter your name"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Form.Group controlId="formEmail" className="mt-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter your email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
 
-              <div className="form-group mb-3">
-                <label htmlFor="formPhone">Phone Number</label>
-                <input
-                  className="form-control"
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleChange}
-                  required
-                  id="formPhone"
-                />
-              </div>
+                <Form.Group controlId="formPhone" className="mt-3">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="formFile" className="mt-3">
+                  <Form.Label>
+                    Upload your payment proof (screenshot or PDF)
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*,.pdf"
+                    // onChange={handleFileChange}
+                    required
+                  />
+                </Form.Group>
 
-              <div className="payment-info mb-3">
-                <h4>Subscribe using any of the payment methods below:</h4>
-                <p>Account Name: RACE EDITORIALE LLP</p>
-                <p>Account Number: 218505001886</p>
-                <p>IFSC: ICIC0002185</p>
-                <p>Branch Name: Saidapet Branch</p>
-              </div>
-              <hr />
-              <div className="payment-info mb-3">
-                <p>UPI ID: raceeditorialellp.9840490241.ibz@icici</p>
-              </div>
-              <hr />
-
-              <div className="d-flex justify-content-center mb-3">
-                {/* <Image src={scanner} fill alt="scanner" className="img-thumbnail" /> */}
-              </div>
-              <hr />
-
-              <div className="form-group mb-3">
-                <label htmlFor="formFile">
-                  Upload your payment proof (screenshot or PDF)
-                </label>
-                <input
-                  className="form-control-file"
-                  type="file"
-                  accept="image/*,.pdf"
-                  required
-                  id="formFile"
-                />
-              </div>
-
-              <div className="text-center">
-                <button type="submit" className="btn btn-primary submit-button">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="submit-button mt-3"
+                >
                   Submit
-                </button>
+                </Button>
               </div>
+              <div className="col-md-6">
+                <div className="payment-info">
+                  <h6>Subscribe using any of the payment methods below:</h6>
+                  <p>
+                    Account Name:{" "}
+                    <span className="text-primary">RACE EDITORIALE LLP</span>
+                  </p>
+                  <p>
+                    Account Number:{" "}
+                    <span className="text-primary">218505001886</span>
+                  </p>
+                  <p>
+                    IFSC: <span className="text-primary">ICIC0002185</span>
+                  </p>
+                  <p>
+                    Branch Name:{" "}
+                    <span className="text-primary">Saidapet Branch</span>
+                  </p>
+                </div>
+                <hr />
+                <div className="payment-info">
+                  <p>
+                    UPI ID:{" "}
+                    <span className="text-primary">
+                      raceeditorialellp.9840490241.ibz@icici
+                    </span>
+                  </p>
+                </div>
+                <hr />
 
-              <p className="mt-3 text-center" style={{ fontSize: "1rem" }}>
-                For any queries, contact us at: 9384857579, 9003031527
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+                <div className="d-flex justify-content-center">
+                  <Image
+                    src="/images/upi scanner-uuIYAzO1.png"
+                    alt="upi scanner"
+                    width={120}
+                    height={120}
+                  />
+                </div>
+              </div>
+            </div>
+          </Form>
+          <hr />
+          <p className="text-center m-0">
+            NOTE:{" "}
+            <span className="text-warning">
+              Exclusive new article - content should be provided by you before
+              the 20th of every month. Our team will ensure its publishing on
+              the website and magazine on priority.
+            </span>
+          </p>
+          <p className="mt-2 m-0 text-center" style={{ fontSize: "1rem" }}>
+            For any queries, contact us at: 9384857579, 9003031527
+          </p>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 

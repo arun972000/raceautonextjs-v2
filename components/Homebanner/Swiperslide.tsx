@@ -7,10 +7,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Pagination,
   Autoplay,
-  EffectCoverflow,
 } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
 
 type SliderType = {
   id: number;
@@ -27,7 +27,6 @@ export default function MySwiperComponent({
 }) {
   return (
     <Swiper
-      
       grabCursor={true}
       centeredSlides={true}
       loop={true}
@@ -71,7 +70,6 @@ function ImageWithPlaceholder({ src, alt }: { src: string; alt: string }) {
           style={{
             width: "100%",
             height: "100%",
-            backgroundColor: "#f0f0f0",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -81,7 +79,13 @@ function ImageWithPlaceholder({ src, alt }: { src: string; alt: string }) {
             zIndex: 2,
           }}
         >
-          <span>Loading...</span>
+          <Skeleton
+            height={50}
+            count={1}
+            baseColor="#e0e7ff" // Light blue background
+            highlightColor="#c7d2fe" // Slightly darker blue highlight
+            className="my-4"
+          />
           {/* Replace this with any custom placeholder component, e.g., a spinner */}
         </div>
       )}

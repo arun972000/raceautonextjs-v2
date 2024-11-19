@@ -1,18 +1,8 @@
 import React from "react";
-import Magazine from "./Magazine";
+import Magazine_v2 from "./Magazine-v2";
 
 const page = () => {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-7">
-          <div className="row">
-            <Magazine />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <Magazine_v2 />;
 };
 
 export default page;

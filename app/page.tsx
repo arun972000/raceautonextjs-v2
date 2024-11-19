@@ -10,8 +10,6 @@ import Image from "next/image";
 import HeaderAd from "@/components/HeaderAd/HeaderAd";
 
 export default async function Home() {
-
-
   return (
     <main className="">
       <BreakingNews />
@@ -19,7 +17,7 @@ export default async function Home() {
 
       <div className="main_content__position">
         <div className="container">
-  <HeaderAd/>
+          <HeaderAd />
           <HomeBanner />
           <MagazineAd />
           <div className="row mt-4">

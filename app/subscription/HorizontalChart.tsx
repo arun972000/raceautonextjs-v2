@@ -78,7 +78,7 @@ const MyHorizontalBarChart = () => {
     ],
   };
 
-  const options = {
+  const options: any = {
     responsive: true,
     indexAxis: "y", // Horizontal bar chart
     plugins: {

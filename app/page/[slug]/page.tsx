@@ -1,6 +1,7 @@
 import React from "react";
 import PageContent from "./PageContent";
 import Navbar from "@/components/Navbar/Navbar";
+import BreakingNews from "@/components/BreakingNews/BreakingNews";
 
 
 const page = ({
@@ -13,8 +14,9 @@ const page = ({
   
   return (
     <>
+    <BreakingNews />
     <Navbar/>
-      <div className="mt-4">
+      <div className="mt-3">
         <PageContent slug={params.slug} />
       </div>
     </>

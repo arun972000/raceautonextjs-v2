@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ProtectedForm from "./ProtectedForm";
 
 const VerifyToken = () => {
-  const { token } = useParams();
+  const { token }: any = useParams();
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState("");
   const decoded: any = jwtDecode(token);

@@ -104,7 +104,7 @@ const Sidebar = async () => {
             .slice(0, 5)}
         </div>
       </div>
-      {eventSettingsData[0].event_1_visible == 1 && (
+      {/* {eventSettingsData[0].event_1_visible == 1 && (
         <div
           className="my-4"
           style={{ position: "relative", aspectRatio: "16/9", width: "100%" }}
@@ -129,7 +129,7 @@ const Sidebar = async () => {
             fill
           />
         </div>
-      )}
+      )} */}
 
       <div
         className="my-4"

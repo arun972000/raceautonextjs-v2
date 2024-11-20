@@ -52,11 +52,12 @@ const Footer = async () => {
   );
   const socialData: SocialData[] = await socialResponse.json();
 
-  const pageResponse = await fetch(`${process.env.BACKEND_URL}api/pages/pages`);
+  const pageResponse = await fetch(`${process.env.BACKEND_URL}api/pages`);
   const pageData: PageData[] = await pageResponse.json();
   const pageVisible = pageData.filter(
     (item) => item.location == "footer" && item.visibility == 1
   );
+
   return (
     <div className="footer mt-5 pb-2">
       <div className="container">

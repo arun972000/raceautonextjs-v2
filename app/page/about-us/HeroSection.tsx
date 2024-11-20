@@ -1,6 +1,7 @@
 import React from "react";
 import "./aboutus.css"; // Add custom styles for hexagon shapes and background
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -20,9 +21,9 @@ const HeroSection = () => {
               analysis on the latest news, views, and trends in the automotive
               industry and its associated sectors.
             </p>
-            <button className="btn btn-light shadow">
+            <Link href="/magazine"><button className="btn btn-light shadow">
               Read More <span aria-hidden="true">→</span>
-            </button>
+            </button></Link>
           </div>
           <div className="col-md-6">
               <img src="/images/abt-hexa.png" alt="abt-hexa" className="img-fluid"/>

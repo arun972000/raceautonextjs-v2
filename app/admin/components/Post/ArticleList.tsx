@@ -34,6 +34,7 @@ const ArticleList = async ({ page }: { page: string }) => {
 
   return (
     <>
+    <Link href='/admin/article/create'><button className="btn btn-primary my-3">Create</button></Link>
       <div className="table-responsive">
         <table className="table table-bordered text-center">
           <thead>

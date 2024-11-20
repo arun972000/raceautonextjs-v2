@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import Image from "next/image";
 import HeaderAd from "@/components/HeaderAd/HeaderAd";
+import GreenBar from "@/components/GreenBar/MagazineBar";
 
 export default async function Home() {
   return (
@@ -29,6 +30,7 @@ export default async function Home() {
         </div>
       </div>
       <Footer />
+      <GreenBar/>
     </main>
   );
 }

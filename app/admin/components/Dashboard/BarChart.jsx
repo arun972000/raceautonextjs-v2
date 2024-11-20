@@ -25,16 +25,14 @@ ChartJS.register(
   Legend,
   Filler
 );
-interface ValueObject {
-  [key: string]: number; // or [key: number]: number if the keys are numeric
-}
+
 
 const MyBarChart = () => {
   const [value, setValue] = useState<ValueObject>({});
   const currentYear = new Date().getFullYear();
 
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const chartValue: number[] = [];
+  const chartValue= [];
   const optionSelect = [];
   for (let year = currentYear; year >= currentYear - 3; year--) {
     optionSelect.push(
@@ -55,7 +53,7 @@ const MyBarChart = () => {
     }
   };
 
-  const handleYearChange = (event: any) => {
+  const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
 

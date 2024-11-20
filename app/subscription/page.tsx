@@ -5,11 +5,11 @@ import MyHorizontalBarChart from "./HorizontalChart";
 import DonutChart from "./SubscribersDonutChart";
 import TextArea from "./TextArea";
 import Image from "next/image";
-import SubscriptionForm from "./SubscriptionForm";
 
 const page = async () => {
   return (
     <>
+
       <div className="container">
         <div className="row">
           <div className="col-12">

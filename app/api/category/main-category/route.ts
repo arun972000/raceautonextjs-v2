@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -22,7 +22,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const { name, description, keywords, color, block_type } = await req.json();
     const name_slug = name.split(" ").join("-");

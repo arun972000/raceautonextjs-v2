@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import { RowDataPacket } from "mysql2";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const { pathname } = new URL(req.url);
     const id = pathname.split("/").pop();

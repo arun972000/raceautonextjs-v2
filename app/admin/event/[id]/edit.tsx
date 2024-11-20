@@ -66,7 +66,7 @@ const EventEdit = () => {
       onDrop,
     });
 
-  const style = useMemo(
+  const style: any = useMemo(
     () => ({
       ...baseStyle,
       ...(isFocused ? focusedStyle : {}),

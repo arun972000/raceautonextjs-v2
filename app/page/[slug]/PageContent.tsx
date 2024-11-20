@@ -2,6 +2,7 @@ import React from 'react'
 import parse from "html-react-parser"
 import Contact from '../contact/contact'
 import Event from '../event/event'
+import AboutUs from '../about-us/aboutus'
 
 const PageContent = async({slug}:{
   slug:string
@@ -16,6 +17,10 @@ if(slug=='contact'){
 
 if(slug=='event'){
   return(<Event/>)
+}
+
+if(slug=='about-us'){
+  return(<AboutUs/>)
 }
 
   return (

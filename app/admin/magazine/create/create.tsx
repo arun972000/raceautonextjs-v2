@@ -62,7 +62,7 @@ const NewsLetterPost = () => {
     }, onDrop
   });
 
-  const style = useMemo(() => ({
+  const style: any = useMemo(() => ({
     ...baseStyle,
     ...(isFocused ? focusedStyle : {}),
     ...(isDragAccept ? acceptStyle : {}),

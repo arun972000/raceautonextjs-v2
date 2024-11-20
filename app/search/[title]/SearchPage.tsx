@@ -1,7 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 
 import React from "react";
 import PaginateComponent from "./Paginate";
 import SearchCard from "./SearchCard";
+import SearchBar from "./SearchBar";
 
 export type SearchData = {
   id: number;
@@ -18,11 +20,10 @@ const SearchPage = async ({ title, page }: { title: string; page: string }) => {
   try {
     const res = await fetch(
       `${process.env.BACKEND_URL}api/search/${title}?page=${page || 1}`,
-      { cache: "no-store" },
+      { cache: "no-store" }
     );
 
     if (res.status === 404) {
-      // If the status is 404, return an empty array
       data = [];
     } else {
       let post = await res.json();
@@ -40,6 +41,11 @@ const SearchPage = async ({ title, page }: { title: string; page: string }) => {
 
   return (
     <div className="row">
+      <SearchBar />
+
+      <h3 className="my-3 text-center text-bold">
+        {data.length} Search results for "{title}"{" "}
+      </h3>
       {data.map((item) => (
         <SearchCard key={item.id} item={item} />
       ))}

@@ -3,7 +3,7 @@ import Footer from "@/components/Footer/Footer";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import GreenBar from "@/components/GreenBar/MagazineBar";
 
-export default function MagazineLayout({
+export default function SearchLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

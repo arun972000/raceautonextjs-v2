@@ -3,7 +3,7 @@ import HeroSection from './HeroSection'
 import MiddleSection from './MiddleSection'
 import ConnectForm from './connectForm'
 
-const aboutus = () => {
+const AboutUs = () => {
   return (
     <>
     <div className="container-fluid">
@@ -17,4 +17,4 @@ const aboutus = () => {
   )
 }
 
-export default aboutus
+export default AboutUs

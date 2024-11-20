@@ -6,6 +6,9 @@ import { mainMenu } from "./Navbar";
 import { category } from "@/types/category";
 import Image from "next/image";
 import { IoMdMenu } from "react-icons/io";
+import ThemeToggle from "../NextThemes";
+import SearchBarServer from "../SearchBar/SearchBarServer";
+import LoginNavButton from "../Navbuttons/LoginNavButton";
 
 const MobileNavbar = ({
   Main_Category,
@@ -29,6 +32,14 @@ const MobileNavbar = ({
             height={40}
             className="ms-4 my-2"
           />
+
+            <ThemeToggle/>
+            <Link href="/subscription">
+              <button className={styles.subscribeButton}>Subscribe</button>
+            </Link>
+            <SearchBarServer />
+            <LoginNavButton/>
+
           <IoMdMenu
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasExample"
@@ -48,7 +59,7 @@ const MobileNavbar = ({
         </button> */}
 
         <div
-          className={`${styles.mobile_offcanvas} offcanvas offcanvas-start`}
+          className={`${styles.mobile_offcanvas} offcanvas offcanvas-start mt-4`}
           tabIndex={-1}
           id="offcanvasExample"
           aria-labelledby="offcanvasExampleLabel"

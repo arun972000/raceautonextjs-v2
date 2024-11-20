@@ -2,9 +2,7 @@ import React from "react";
 import DashboardCard from "./DashboardCard";
 import MyBarChart from "./BarChart";
 import PieChartAdmin from "./PieChart";
-import ProgressBar from "./ProgressBar";
 import ExcelUpload from "./ExcelUpload";
-import MostViews from "./MostViews";
 import { FaClipboardList, FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { MdEventAvailable } from "react-icons/md";
@@ -82,11 +80,6 @@ const Dashboard = async () => {
       <div className="col-md-4 mt-3">
         <PieChartAdmin />
       </div>
-      {/* <div className="col-12">
-  <div className="row">
-    {viewsCardData.map((item:viewsCardType)=><MostViews key={item.id} item={item}/>)}
-  </div>
-</div> */}
       <div className="col-12 mt-3">
         <ExcelUpload />
       </div>

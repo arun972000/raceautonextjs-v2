@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextResponse) {
+export async function PUT(req: NextRequest) {
   try {
     const { pathname } = new URL(req.url);
     const id = pathname.split("/").pop();

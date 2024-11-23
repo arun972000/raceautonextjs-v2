@@ -1,10 +1,9 @@
-import React from 'react'
-import Edit_NewsletterCategory from './edit'
+import React from "react";
+import dynamic from "next/dynamic";
+const Edit_NewsletterCategory = dynamic(() => import("./edit"), { ssr: false });
 
 const page = () => {
-  return (
-    <Edit_NewsletterCategory/>
-  )
-}
+  return <Edit_NewsletterCategory />;
+};
 
-export default page
+export default page;

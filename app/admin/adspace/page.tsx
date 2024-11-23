@@ -1,9 +1,13 @@
 import React from 'react'
-import AdForm from './Adspace'
-
+import dynamic from 'next/dynamic'
+const DynamicAdForm = dynamic(
+  () => import('./Adspace'),
+  { ssr: false }
+)
+ 
 const page = () => {
   return (
-    <AdForm/>
+    <DynamicAdForm/>
   )
 }
 

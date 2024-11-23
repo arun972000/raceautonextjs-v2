@@ -1,10 +1,8 @@
-import React from 'react'
-import Create_Main from './create'
-
+import React from "react";
+import dynamic from "next/dynamic";
+const Create_Main = dynamic(() => import("./create"), { ssr: false });
 const page = () => {
-  return (
-    <Create_Main/>
-  )
-}
+  return <Create_Main />;
+};
 
-export default page
+export default page;

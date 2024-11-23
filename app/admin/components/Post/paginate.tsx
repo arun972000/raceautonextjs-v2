@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ReactPaginate from "react-paginate";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 

@@ -1,10 +1,9 @@
-import React from 'react'
-import Main_Category from './main'
+import React from "react";
+import dynamic from "next/dynamic";
+const Main_Category = dynamic(() => import("./main"), { ssr: false });
 
 const page = () => {
-  return (
-    <Main_Category/>
-  )
-}
+  return <Main_Category />;
+};
 
-export default page
+export default page;

@@ -4,7 +4,11 @@ import { adminPostList } from "../../components/Post/ArticleList";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/components/Time";
-import Dropdownbuttons from "../../components/Post/Dropdownbuttons";
+import dynamic from "next/dynamic";
+const Dropdownbuttons = dynamic(
+  () => import("../../components/Post/Dropdownbuttons"),
+  { ssr: false }
+);
 
 const page = async () => {
   const [post] =

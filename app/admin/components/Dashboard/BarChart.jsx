@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +29,7 @@ ChartJS.register(
 
 
 const MyBarChart = () => {
-  const [value, setValue] = useState<ValueObject>({});
+  const [value, setValue] = useState({});
   const currentYear = new Date().getFullYear();
 
   const [selectedYear, setSelectedYear] = useState(currentYear);

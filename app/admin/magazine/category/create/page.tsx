@@ -1,10 +1,11 @@
-import React from 'react'
-import Create_newsLetterCategory from './create'
+import React from "react";
+import dynamic from "next/dynamic";
+const Create_newsLetterCategory = dynamic(() => import("./create"), {
+  ssr: false,
+});
 
 const page = () => {
-  return (
-    <Create_newsLetterCategory/>
-  )
-}
+  return <Create_newsLetterCategory />;
+};
 
-export default page
+export default page;

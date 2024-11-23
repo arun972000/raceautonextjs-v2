@@ -1,10 +1,9 @@
-import React from 'react'
-import UserTable from './user'
+import React from "react";
+import dynamic from "next/dynamic";
+const UserTable = dynamic(() => import("./user"), { ssr: false });
 
 const page = () => {
-  return (
-    <UserTable/>
-  )
-}
+  return <UserTable />;
+};
 
-export default page
+export default page;

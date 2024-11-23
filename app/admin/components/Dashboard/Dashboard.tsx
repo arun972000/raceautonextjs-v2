@@ -1,11 +1,12 @@
 import React from "react";
 import DashboardCard from "./DashboardCard";
-import MyBarChart from "./BarChart";
-import PieChartAdmin from "./PieChart";
-import ExcelUpload from "./ExcelUpload";
+const MyBarChart = dynamic(() => import("./BarChart"), { ssr: false });
+const PieChartAdmin = dynamic(() => import("./PieChart"), { ssr: false });
+const ExcelUpload = dynamic(()=>import("./ExcelUpload"), { ssr: false })
 import { FaClipboardList, FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { MdEventAvailable } from "react-icons/md";
+import dynamic from "next/dynamic";
 
 export type viewsCardType = {
   id: number;

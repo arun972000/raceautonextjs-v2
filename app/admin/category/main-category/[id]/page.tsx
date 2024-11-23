@@ -1,10 +1,9 @@
-import React from 'react'
-import Edit_MainCategory from './edit'
+import React from "react";
+import dynamic from "next/dynamic";
+const Edit_MainCategory = dynamic(() => import("./edit"), { ssr: false });
 
 const page = () => {
-  return (
-    <Edit_MainCategory/>
-  )
-}
+  return <Edit_MainCategory />;
+};
 
-export default page
+export default page;

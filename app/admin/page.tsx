@@ -1,10 +1,14 @@
 import React from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
+import dynamic from "next/dynamic";
+const DynamicDashboard = dynamic(
+  () => import("./components/Dashboard/Dashboard"),
+  { ssr: false }
+);
 
 const page = () => {
   return (
     <>
-      <Dashboard />
+      <DynamicDashboard />
     </>
   );
 };

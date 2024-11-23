@@ -1,10 +1,9 @@
-import React from 'react'
-import EditUser from './edit'
+import React from "react";
+import dynamic from "next/dynamic";
+const EditUser = dynamic(() => import("./edit"), { ssr: false });
 
 const page = () => {
-  return (
-    <EditUser/>
-  )
-}
+  return <EditUser />;
+};
 
-export default page
+export default page;

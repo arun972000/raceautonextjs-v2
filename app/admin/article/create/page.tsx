@@ -1,10 +1,12 @@
-import React from 'react'
-import AdminPost from '../../components/Post/PostCreate/Create'
+import React from "react";
+import dynamic from "next/dynamic";
+const AdminPost = dynamic(
+  () => import("../../components/Post/PostCreate/Create"),
+  { ssr: false }
+);
 
 const page = () => {
-  return (
-    <AdminPost/>
-  )
-}
+  return <AdminPost />;
+};
 
-export default page
+export default page;

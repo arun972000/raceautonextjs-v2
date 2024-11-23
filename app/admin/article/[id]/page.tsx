@@ -1,10 +1,12 @@
-import ArticleEdit from '@/app/admin/components/Post/post-edit/EditPost'
-import React from 'react'
+import dynamic from "next/dynamic";
+import React from "react";
+const ArticleEdit = dynamic(
+  () => import("@/app/admin/components/Post/post-edit/EditPost"),
+  { ssr: false }
+);
 
 const page = () => {
-  return (
-    <ArticleEdit/>
-  )
-}
+  return <ArticleEdit />;
+};
 
-export default page
+export default page;

@@ -1,10 +1,10 @@
-import React from 'react'
-import Create_Market from './create'
+import React from "react";
+import dynamic from "next/dynamic";
+
+const Create_Market = dynamic(() => import("./create"), { ssr: false });
 
 const page = () => {
-  return (
-    <Create_Market/>
-  )
-}
+  return <Create_Market />;
+};
 
-export default page
+export default page;

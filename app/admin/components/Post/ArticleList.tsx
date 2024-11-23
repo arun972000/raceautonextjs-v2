@@ -1,9 +1,15 @@
 import React from "react";
-import AdminPaginateArticle from "./paginate";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/components/Time";
-import Dropdownbuttons from "./Dropdownbuttons";
+import dynamic from "next/dynamic";
+const Dropdownbuttons = dynamic(
+  () => import("../../components/Post/Dropdownbuttons"),
+  { ssr: false }
+);
+const AdminPaginateArticle = dynamic(() => import("./paginate"), {
+  ssr: false,
+});
 
 export type adminPostList = {
   title_slug: any;
@@ -24,7 +30,7 @@ export type adminPostList = {
 const ArticleList = async ({ page }: { page: string }) => {
   const res = await fetch(
     `${process.env.BACKEND_URL}api/admin/admin-post?page=${page || 1}`,
-    { cache: 'no-store'}
+    { cache: "no-store" }
   );
   const post = await res.json();
 
@@ -34,7 +40,9 @@ const ArticleList = async ({ page }: { page: string }) => {
 
   return (
     <>
-    <Link href='/admin/article/create'><button className="btn btn-primary my-3">Create</button></Link>
+      <Link href="/admin/article/create">
+        <button className="btn btn-primary my-3">Create</button>
+      </Link>
       <div className="table-responsive">
         <table className="table table-bordered text-center">
           <thead>

@@ -1,10 +1,9 @@
-import React from 'react'
-import EventSettings from './settings'
+import React from "react";
+import dynamic from "next/dynamic";
+const EventSettings = dynamic(() => import("./settings"), { ssr: false });
 
 const page = () => {
-  return (
-   <EventSettings/>
-  )
-}
+  return <EventSettings />;
+};
 
-export default page
+export default page;

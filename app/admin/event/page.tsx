@@ -1,10 +1,9 @@
-import React from 'react'
-import EventTable from './table'
+import React from "react";
+import dynamic from "next/dynamic";
+const EventTable = dynamic(() => import("./table"), { ssr: false });
 
 const page = () => {
-  return (
-    <EventTable/>
-  )
-}
+  return <EventTable />;
+};
 
-export default page
+export default page;

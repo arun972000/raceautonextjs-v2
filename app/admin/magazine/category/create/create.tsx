@@ -1,19 +1,22 @@
-'use client'
+"use client";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const Create_newsLetterCategory = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
 
   const createApi = async () => {
     try {
-      await axios.post(
-        `${process.env.BACKEND_URL}api/magazine/category`,
-        { title, color }
-      );
+      await axios.post(`${process.env.BACKEND_URL}api/magazine/category`, {
+        title,
+        color,
+      });
       toast.success("Category created!", {
         position: "top-right",
         autoClose: 4000,
@@ -49,9 +52,10 @@ const Create_newsLetterCategory = () => {
     <>
       <div className="row justify-content-center">
         <div className="col-lg-6">
-          <button className="btn btn-secondary mt-3 ms-2">Back</button>
-
           <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+            <Link href="/admin/magazine/category">
+              <button className="btn btn-secondary my-3">Back</button>
+            </Link>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formName">
                 <Form.Label>Name</Form.Label>

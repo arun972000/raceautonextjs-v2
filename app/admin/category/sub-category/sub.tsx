@@ -79,9 +79,9 @@ const Sub_Category = () => {
         </Modal.Body>
       </Modal>
       <div className="col-12">
-        <Link href="/admin/categories/create-subCategory">
+        <Link href="/admin/category/sub-category/create">
           <Button variant="primary" className="mt-3">
-            <MdCreateNewFolder />
+            Create
           </Button>
         </Link>
         <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">
@@ -104,7 +104,7 @@ const Sub_Category = () => {
                   <td>{item.parent}</td>
                   <td>
                     <Link
-                      href={`/admin/categories/edit-subCategory/${item.id}`}
+                      href={`/admin/category/sub-category/${item.id}`}
                     >
                       <button className="btn btn-primary me-3">
                         <MdModeEdit size={20} />

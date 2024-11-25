@@ -9,9 +9,12 @@ import axios from 'axios';
 import { FaFileImage } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 const NewsLetterPost = () => {
+  const router = useRouter();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [title, setTitle] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -151,13 +154,11 @@ const NewsLetterPost = () => {
 
   return (
     <div className="col-12">
-      <button
-        className="btn btn-secondary mt-3 ms-2"
-        // onClick={() => navigate("/admin/e-magazine/magazines")}
-      >
-        Back
-      </button>
+
       <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+      <Link href="/admin/magazine">
+        <button className="btn btn-secondary">Back</button>
+      </Link>
         <Form onSubmit={handleSubmit} className="mt-4">
           <Form.Group controlId="formTitle" className="mb-3">
             <Form.Label>Title</Form.Label>

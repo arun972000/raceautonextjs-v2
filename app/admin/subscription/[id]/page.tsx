@@ -1,5 +1,6 @@
 import React from 'react'
-import EditPlan from './edit'
+import dynamic from 'next/dynamic'
+const EditPlan = dynamic(()=>import('./edit'),{ssr:false})
 
 const page = () => {
   return (

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const EditPlan = () => {
   const { id } = useParams();
@@ -94,8 +95,8 @@ const EditPlan = () => {
   return (
     <>
       <div className="col-12">
-        <button className="btn btn-primary my-3">Back</button>
-        <div className="shadow-sm p-3 mb-5   bg-white rounded border-0">
+        <div className="shadow-sm p-3 mb-5 rounded border-0">
+        <Link href='/admin/subscription'><button className="btn btn-primary my-3">Back</button></Link>
           <Table striped bordered hover>
             <thead>
               <tr>

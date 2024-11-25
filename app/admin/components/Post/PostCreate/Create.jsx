@@ -557,7 +557,7 @@ export default function AdminPost() {
                     ))}
                 </Form.Control>
               </Form.Group>
-              <Form.Group controlId="formKeywords" className="mb-3">
+              <Form.Group controlId="formKeywords" className="mb-2">
                 <Form.Label>Keywords</Form.Label>
                 <Form.Control
                   type="text"
@@ -590,7 +590,16 @@ export default function AdminPost() {
                   <ul>{fileRejectionItems}</ul>
                 </aside>
               </Form.Group>
-
+              <Form.Group controlId="formimagedescription" className="mb-3">
+                <Form.Label>Image Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Image Desscription"
+                  value={imageDescription}
+                  onChange={(e)=>setImageDescription(e.target.value)}
+                  required
+                />
+              </Form.Group>
               <Form.Check
                 type="checkbox"
                 id="sliderCheckbox"
@@ -623,7 +632,7 @@ export default function AdminPost() {
               <Form.Check
                 type="checkbox"
                 id="scheduleCheckbox"
-                label={isScheduled ? "Disable Schedule" : "Enable Schedule"}
+                label="Schedule"
                 checked={isScheduled}
                 onChange={() => setisScheduled(!isScheduled)}
               />
@@ -647,7 +656,7 @@ export default function AdminPost() {
           <Form.Check
             type="checkbox"
             id="draftCheckbox"
-            label={draft ? "Disable Draft mode" : "Enable Draft mode"}
+            label='Draft Mode'
             checked={draft}
             className="text-danger mb-3"
             onChange={() => setDraft(!draft)}

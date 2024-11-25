@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";;
 import { Editor } from "@tinymce/tinymce-react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 
 const AdminPageEdit = () => {
@@ -14,11 +15,11 @@ const AdminPageEdit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
-  const [parentLink, setParentLink] = useState<any>(7);
+  const [parentLink, setParentLink] = useState  (7);
   const [location, setLocation] = useState("top menu");
-  const [visibility, setVisibility] = useState<any>(0);
+  const [visibility, setVisibility] = useState  (0);
   const [page_content, setpage_content] = useState("");
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef  (null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEditorChange = (editContent) => {
@@ -87,12 +88,13 @@ const AdminPageEdit = () => {
 
   return (
     <div className="col-12">
-      <button
-        className="btn btn-secondary mt-3 ms-2"
-      >
-        Back
-      </button>
+
       <div className="shadow-sm p-3 mb-5 mt-3 bg-white rounded border-0">
+        <Link href='/admin/page'><button
+          className="btn btn-secondary mb-3"
+        >
+          Back
+        </button></Link>
         <div className="row">
           <div className="col">
             <Form.Group controlId="formTitle" className="mb-3">
@@ -185,46 +187,46 @@ const AdminPageEdit = () => {
             <Form.Group controlId="formContent" className="mb-3">
               <Form.Label>Content</Form.Label>
               <Editor
-                  apiKey='3fr142nwyhd2jop9d509ekq6i2ks2u6dmrbgm8c74gu5xrml'
-                  onInit={(_evt, editor) => editorRef.current = editor}
-                  value={page_content}
-                  init={{
-                    height: 500,
-                    menubar: true,
-                    plugins: [
-                      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                      'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                    ],
-                    toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                    file_picker_callback: (callback, value, meta) => {
-                      if (meta.filetype === 'image') {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'file');
-                        input.setAttribute('accept', 'image/*');
-                        input.onchange = function () {
-                          const file = this.files[0];
-                          const reader = new FileReader();
-                          reader.onload = function () {
-                            const id = 'blobid' + (new Date()).getTime();
-                            const blobCache = editorRef.current.editorUpload.blobCache;
-                            const base64 = reader.result.split(',')[1];
-                            const blobInfo = blobCache.create(id, file, base64);
-                            blobCache.add(blobInfo);
-                            callback(blobInfo.blobUri(), { title: file.name });
-                          };
-                          reader.readAsDataURL(file);
+                apiKey='3fr142nwyhd2jop9d509ekq6i2ks2u6dmrbgm8c74gu5xrml'
+                onInit={(_evt, editor) => editorRef.current = editor}
+                value={page_content}
+                init={{
+                  height: 500,
+                  menubar: true,
+                  plugins: [
+                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                  ],
+                  toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+                  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                  file_picker_callback: (callback, value, meta) => {
+                    if (meta.filetype === 'image') {
+                      const input = document.createElement('input');
+                      input.setAttribute('type', 'file');
+                      input.setAttribute('accept', 'image/*');
+                      input.onchange = function () {
+                        const file = this.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                          const id = 'blobid' + (new Date()).getTime();
+                          const blobCache = editorRef.current.editorUpload.blobCache;
+                          const base64 = reader.result.split(',')[1];
+                          const blobInfo = blobCache.create(id, file, base64);
+                          blobCache.add(blobInfo);
+                          callback(blobInfo.blobUri(), { title: file.name });
                         };
-                        input.click();
-                      }
-                    },
-                  }}
-                  onEditorChange={handleEditorChange}
-                />
+                        reader.readAsDataURL(file);
+                      };
+                      input.click();
+                    }
+                  },
+                }}
+                onEditorChange={handleEditorChange}
+              />
             </Form.Group>
             <Button variant="primary" onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? 'Updated' : 'Submit'}
+              {isSubmitting ? 'Updated' : 'Submit'}
             </Button>
           </div>
         </div>

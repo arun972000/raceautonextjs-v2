@@ -4,7 +4,6 @@ import {
   FaAd,
   FaAdversal,
   FaAngleDown,
-  FaArrowRight,
   FaHome,
   FaSitemap,
   FaThList,
@@ -12,7 +11,13 @@ import {
 } from "react-icons/fa";
 import { IoIosMail, IoIosSettings } from "react-icons/io";
 import "./Sidebar.css";
-import { RiAdminFill, RiAdvertisementFill, RiPagesFill } from "react-icons/ri";
+import {
+  RiAdminFill,
+  RiAdvertisementFill,
+  RiCalendarScheduleFill,
+  RiDraftFill,
+  RiPagesFill,
+} from "react-icons/ri";
 import {
   MdAdminPanelSettings,
   MdEventAvailable,
@@ -60,7 +65,7 @@ const AdminSidebar = async () => {
         <ul
           className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
           id="menu"
-          style={{width:'100%'}}
+          style={{ width: "100%" }}
         >
           <li className="nav-item ">
             <Link href="/admin" className="nav-link align-middle px-0">
@@ -68,14 +73,17 @@ const AdminSidebar = async () => {
               <span className="ms-1 d-none d-sm-inline">Home</span>
             </Link>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Link
               href="#magmenu"
               data-bs-toggle="collapse"
-              className="nav-link px-0 align-middle"
+              className="nav-link px-0 align-middle d-flex align-items-center"
             >
               <IoIosMail />{" "}
               <span className="ms-1 d-none d-sm-inline">Magazine</span>{" "}
+              <span className="d-none d-sm-inline ms-auto">
+                <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"
@@ -84,20 +92,26 @@ const AdminSidebar = async () => {
             >
               <li className="w-100">
                 <Link href="/admin/magazine" className="nav-link px-0">
-                  <MdEventAvailable />{" "}
-                  <span className="d-none d-sm-inline">Magazines</span>
+                  <MdEventAvailable className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary text-primary">
+                    Magazines
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/admin/magazine/category" className="nav-link px-0">
-                  <FaSitemap />{" "}
-                  <span className="d-none d-sm-inline">Category</span>
+                  <FaSitemap className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Category
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/admin/magazine/ad" className="nav-link px-0">
-                  <FaAdversal />{" "}
-                  <span className="d-none d-sm-inline">Magazine Ad</span>
+                  <FaAdversal className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Magazine Ad
+                  </span>
                 </Link>
               </li>
             </ul>
@@ -117,14 +131,17 @@ const AdminSidebar = async () => {
               <span className="ms-1 d-none d-sm-inline">Subscription</span>
             </Link>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Link
               href="#eventmenu"
               data-bs-toggle="collapse"
-              className="nav-link px-0 align-middle "
+              className="nav-link px-0 align-middle d-flex align-items-center"
             >
               <BiCategory />{" "}
               <span className="ms-1 d-none d-sm-inline">Event</span>
+              <span className="d-none d-sm-inline ms-auto">
+                <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"
@@ -133,26 +150,33 @@ const AdminSidebar = async () => {
             >
               <li className="w-100">
                 <Link href="/admin/event" className="nav-link px-0">
-                  <MdOutlineEventAvailable />{" "}
-                  <span className="d-none d-sm-inline">Events</span>
+                  <MdOutlineEventAvailable className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Events
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/admin/event/settings" className="nav-link px-0">
-                  <MdOutlineDisplaySettings />{" "}
-                  <span className="d-none d-sm-inline">Settings</span>
+                  <MdOutlineDisplaySettings className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Settings
+                  </span>
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Link
               href="#postmenu"
               data-bs-toggle="collapse"
-              className="nav-link px-0 align-middle"
+              className="nav-link px-0 align-middle d-flex align-items-center"
             >
               <IoIosMail />{" "}
               <span className="ms-1 d-none d-sm-inline">Post</span>{" "}
+              <span className="d-none d-sm-inline ms-auto">
+                <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"
@@ -161,44 +185,40 @@ const AdminSidebar = async () => {
             >
               <li className="w-100">
                 <Link href="/admin/article" className="nav-link px-0">
-                  <GrArticle />{" "}
-                  <span className="d-none d-sm-inline">Articles</span>
+                  <GrArticle className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Articles
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="#" className="nav-link px-0">
-                  <TfiLayoutSlider />{" "}
-                  <span className="d-none d-sm-inline">Slider</span>
+                  <TfiLayoutSlider className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Slider
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="#" className="nav-link px-0">
-                  <MdOutlineRecommend />{" "}
-                  <span className="d-none d-sm-inline">Recommended</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="nav-link px-0">
-                  <PiNewspaperClippingBold />{" "}
-                  <span className="d-none d-sm-inline">Breaking</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="nav-link px-0">
-                  <MdFeaturedPlayList />{" "}
-                  <span className="d-none d-sm-inline">Featured</span>
+                  <MdFeaturedPlayList className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Featured
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/admin/article/draft" className="nav-link px-0">
-                  <MdFeaturedPlayList />{" "}
-                  <span className="d-none d-sm-inline">Draft</span>
+                  <RiDraftFill className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">Draft</span>
                 </Link>
               </li>
               <li>
                 <Link href="/admin/article/schedule" className="nav-link px-0">
-                  <MdFeaturedPlayList />{" "}
-                  <span className="d-none d-sm-inline">Schedule</span>
+                  <RiCalendarScheduleFill className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Schedule
+                  </span>
                 </Link>
               </li>
             </ul>
@@ -209,14 +229,17 @@ const AdminSidebar = async () => {
               <span className="ms-1 d-none d-sm-inline">Market</span>{" "}
             </Link>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Link
               href="#categorymenu"
               data-bs-toggle="collapse"
-              className="nav-link px-0 align-middle "
+              className="nav-link px-0 align-middle d-flex align-items-center"
             >
               <FaThList />{" "}
               <span className="ms-1 d-none d-sm-inline">Category</span>
+              <span className="d-none d-sm-inline ms-auto">
+                <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"
@@ -228,8 +251,8 @@ const AdminSidebar = async () => {
                   href="/admin/category/main-category"
                   className="nav-link px-0"
                 >
-                  <TbCategoryMinus />{" "}
-                  <span className="d-none d-sm-inline">Main</span>
+                  <TbCategoryMinus className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">Main</span>
                 </Link>
               </li>
               <li>
@@ -237,20 +260,23 @@ const AdminSidebar = async () => {
                   href="/admin/category/sub-category"
                   className="nav-link px-0"
                 >
-                  <TbCategoryPlus />{" "}
-                  <span className="d-none d-sm-inline">Sub</span>
+                  <TbCategoryPlus className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">Sub</span>
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Link
               href="#usermenu"
               data-bs-toggle="collapse"
-              className="nav-link px-0 align-middle "
+              className="nav-link px-0 align-middle d-flex align-items-center"
             >
               <FaUsersGear />{" "}
               <span className="ms-1 d-none d-sm-inline">User</span>
+              <span className="d-none d-sm-inline ms-auto">
+                <FaAngleDown />
+              </span>
             </Link>
             <ul
               className="collapse nav flex-column ms-1"
@@ -259,18 +285,19 @@ const AdminSidebar = async () => {
             >
               <li className="w-100">
                 <Link href="/admin/user" className="nav-link px-0">
-                  <FaUsers /> <span className="d-none d-sm-inline">Users</span>
+                  <FaUsers className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">Users</span>
                 </Link>
               </li>
               <li>
                 <Link href="#" className="nav-link px-0">
-                  <MdAdminPanelSettings />{" "}
+                  <MdAdminPanelSettings className="text-primary" />{" "}
                   <span className="d-none d-sm-inline">Admin</span>
                 </Link>
               </li>
             </ul>
           </li>
-          <li style={{width:'100%'}}>
+          <li style={{ width: "100%" }}>
             {/* <Link
               href="#admenu"
               data-bs-toggle="collapse"
@@ -283,12 +310,11 @@ const AdminSidebar = async () => {
               href="#admenu"
               data-bs-toggle="collapse"
               className="nav-link px-0 align-middle d-flex align-items-center"
-
             >
               <RiAdvertisementFill />
               <span className="ms-1 d-none d-sm-inline">Ad</span>
               <span className="d-none d-sm-inline ms-auto">
-              <FaAngleDown />
+                <FaAngleDown />
               </span>
             </Link>
             <ul
@@ -297,8 +323,11 @@ const AdminSidebar = async () => {
               data-bs-parent="#menu"
             >
               <li className="w-100">
-                <Link href="#" className="nav-link px-0">
-                  <FaAd /> <span className="d-none d-sm-inline">Ad space</span>
+                <Link href="/admin/adspace" className="nav-link px-0">
+                  <FaAd className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Ad space
+                  </span>
                 </Link>
               </li>
             </ul>

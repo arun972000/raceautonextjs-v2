@@ -3,12 +3,15 @@ import { magazineCardType } from "@/app/magazine/Magazine";
 import { formatDate } from "@/components/Time";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const Magazine = () => {
+  const router = useRouter();
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
@@ -79,7 +82,9 @@ const Magazine = () => {
           </div>
         </Modal.Body>
       </Modal>
-
+      <Link href="/admin/magazine/create">
+        <button className="btn btn-primary my-3">Create</button>
+      </Link>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -108,7 +113,7 @@ const Magazine = () => {
               <td>{formatDate(item.created_date)}</td>
               <td>
                 <button className="btn btn-primary me-3">
-                  <MdModeEdit size={20} />
+                  <MdModeEdit size={20} onClick={()=>router.push(`/admin/magazine/edit/${item.id}`)}/>
                 </button>
                 <button
                   className="btn btn-danger"

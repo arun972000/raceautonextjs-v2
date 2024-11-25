@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 import path from "path";
@@ -30,13 +30,14 @@ export async function POST(req) {
     const draftValue = formData.get("draft");
     const scheduled = formData.get("schedule_time");
 
-    const scheduleTime = (scheduled === null || scheduled === '' || scheduled === undefined) ? 0 : 1;
-    
-   
-
+    const scheduleTime =
+      scheduled === null || scheduled === "" || scheduled === undefined
+        ? 0
+        : new Date(scheduled) < new Date()
+        ? 0
+        : 1;
+console.log(scheduleTime)
     const draft = draftValue == "true" ? 0 : 1;
-
-
 
     const title_slug = title.split(" ").join("-");
 
@@ -151,13 +152,22 @@ export async function POST(req) {
       }
 
       if (scheduled) {
-        const publishTime = new Date(scheduled);
-        schedule.scheduleJob(publishTime, async function () {
-          await db.execute(`UPDATE posts SET is_scheduled = 0 WHERE id = ?`, [
-            postId,
-          ]);
-        });
-      }
+  const publishTime = new Date(scheduled);
+  const currentTime = new Date();
+
+  // Check if the scheduled time is in the past
+  if (publishTime < currentTime) {
+    console.log("Scheduled time is in the past. No action taken.");
+  }else{
+    schedule.scheduleJob(publishTime, async function () {
+      await db.execute(`UPDATE posts SET is_scheduled = 0 WHERE id = ?`, [
+        postId,
+      ]);
+      console.log(`Post with ID ${postId} is now published.`);
+    });
+  }
+ 
+}
     }
 
     // Handle remaining files (secondary files)

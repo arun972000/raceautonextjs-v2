@@ -10,6 +10,7 @@ import axios from "axios";
 import { FaFileImage } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import Link from "next/link";
 
 const EventPost = () => {
   const [isFileSelected, setIsFileSelected] = useState(false);
@@ -49,7 +50,7 @@ const EventPost = () => {
     borderColor: "#ff1744",
   };
 
-  const onDrop = useCallback((acceptedFiles:any) => {
+  const onDrop = useCallback((acceptedFiles: any) => {
     setImage_url(acceptedFiles[0]);
     setIsFileSelected(true);
     setPreview(URL.createObjectURL(acceptedFiles[0]));
@@ -73,11 +74,11 @@ const EventPost = () => {
     [isFocused, isDragAccept, isDragReject]
   );
 
-  const handleKeywordsChange = (e:any) => {
+  const handleKeywordsChange = (e: any) => {
     setReferenceLink(e.target.value);
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -90,10 +91,7 @@ const EventPost = () => {
     formData.append("image_url", image_url);
 
     try {
-      await axios.post(
-        `${process.env.BACKEND_URL}api/admin/event`,
-        formData
-      );
+      await axios.post(`${process.env.BACKEND_URL}api/admin/event`, formData);
       toast.success("Event posted!", {
         position: "top-right",
         autoClose: 4000,
@@ -125,6 +123,9 @@ const EventPost = () => {
   return (
     <div className="col-12">
       <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+        <Link href="/admin/event">
+          <button className="btn btn-secondary my-3">Back</button>
+        </Link>
         <div className="row justify-content-center">
           <div className="col-md-6">
             <Form.Group controlId="formTitle" className="mb-3">

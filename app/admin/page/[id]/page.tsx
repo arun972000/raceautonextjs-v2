@@ -1,5 +1,6 @@
 import React from "react";
-import AdminPageEdit from "./edit";
+import dynamic from "next/dynamic";
+const AdminPageEdit = dynamic(() => import("./edit"));
 
 const page = () => {
   return <AdminPageEdit />;

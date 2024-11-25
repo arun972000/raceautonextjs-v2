@@ -1,16 +1,13 @@
-'use client'
+"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
-
-
 const Edit_MainCategory = () => {
   const { id } = useParams();
-
   const [categoryName, setCategoryName] = useState("");
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -79,14 +76,14 @@ const Edit_MainCategory = () => {
           theme: "light",
         }
       );
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   };
 
   useEffect(() => {
     formDataApi();
   }, []);
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     EditApi();
   };
@@ -94,12 +91,10 @@ const Edit_MainCategory = () => {
   return (
     <div className="row justify-content-center">
       <div className="col-lg-6">
-      <button
-        className="btn btn-secondary mt-3 ms-2"
-      >
-        Back
-      </button>
         <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+          <Link href="/admin/category/main-category">
+            <button className="btn btn-secondary mt-3">Back</button>
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="categoryName" className="form-label">
@@ -259,8 +254,12 @@ const Edit_MainCategory = () => {
               </div>
               {/* Add more radio buttons as needed */}
             </div>
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Updated' : 'Submit'}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Updated" : "Submit"}
             </button>
           </form>
         </div>

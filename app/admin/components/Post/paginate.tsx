@@ -25,7 +25,7 @@ const AdminPaginateArticle = ({ totalCount }: { totalCount: number }) => {
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * 10) % totalCount;
     setItemOffset(newOffset);
-    push(`/admin/article/articles?page=${event.selected + 1}`);
+    push(`/admin/article?page=${event.selected + 1}`);
   };
 
   return (

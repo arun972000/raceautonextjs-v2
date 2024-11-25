@@ -1,11 +1,13 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Edit_NewsletterCategory = () => {
+  const router = useRouter();
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,14 +73,12 @@ const Edit_NewsletterCategory = () => {
 
   return (
     <div className="row justify-content-center">
+
       <div className="col-lg-6">
-        <button
-          className="btn btn-secondary mt-3 ms-2"
-          //   onClick={() => navigate("/admin/e-magazine/categories")}
-        >
-          Back
-        </button>
         <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+        <Link href="/admin/magazine/category">
+        <button className="btn btn-secondary mb-3">Back</button>
+      </Link>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">

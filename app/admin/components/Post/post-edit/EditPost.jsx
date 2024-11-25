@@ -390,7 +390,6 @@ const ArticleEdit = () => {
     <div className="col-12">
       <button
         className="btn btn-secondary mt-3 ms-2"
-        // onClick={() => navigate("/admin/article/articles")}
       >
         Back
       </button>
@@ -636,11 +635,9 @@ const ArticleEdit = () => {
                   Note: The image size should not exceed 5 MB.
                 </p>
                 <input {...getInputPropsAdditional()} />
-
                 <p>Drag 'n' drop some files here, or click to select files</p>
               </div>
               <aside style={thumbsContainer}>
-                {/* {thumbs} */}
                 {files}
                 <ul>{fileRejectionItems}</ul>
               </aside>

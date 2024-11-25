@@ -6,13 +6,12 @@ import { MdCreateNewFolder, MdDelete, MdModeEdit } from "react-icons/md";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
 
-
-type pageType={
-  id:number;
-  title:string;
-  location:string;
-  visibility:number;
-}
+type pageType = {
+  id: number;
+  title: string;
+  location: string;
+  visibility: number;
+};
 const Admin_page = () => {
   const [data, setData] = useState([]);
 
@@ -30,11 +29,6 @@ const Admin_page = () => {
   }, []);
   return (
     <div className="col-12">
-      {/* <Link to="/admin/create_market">
-        <Button variant="primary" className="mt-3">
-          <MdCreateNewFolder />
-        </Button>
-      </Link> */}
       <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">
         <table className="table text-center">
           <thead className="bg-light">
@@ -46,7 +40,7 @@ const Admin_page = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item:pageType) => (
+            {data.map((item: pageType) => (
               <tr key={item.id}>
                 <td>{item.title}</td>
 

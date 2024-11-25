@@ -16,6 +16,9 @@ const page = async () => {
 
   return (
     <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">
+      <Link href="/admin/magazine/category/create">
+        <button className="btn btn-primary my-3">Create</button>
+      </Link>
       <table className="table text-center">
         <thead className="bg-light">
           <tr>
@@ -33,7 +36,7 @@ const page = async () => {
                 {item.color}
               </td>
               <td>
-                <Link href={`/admin/e-magazine/edit-category/${item.id}`}>
+                <Link href={`/admin/magazine/category/edit/${item.id}`}>
                   <button className="btn btn-primary me-3">
                     <MdModeEdit size={20} />
                   </button>

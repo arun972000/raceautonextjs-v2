@@ -2,6 +2,7 @@
 import { category } from "@/types/category";
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -100,8 +101,10 @@ const Edit_subCategory = () => {
   return (
     <div className="row justify-content-center">
       <div className="col-lg-6">
-        <button className="btn btn-secondary mt-3 ms-2">Back</button>
         <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
+          <Link href="/admin/category/sub-category">
+            <button className="btn btn-secondary mb-3">Back</button>
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="categoryName" className="form-label">

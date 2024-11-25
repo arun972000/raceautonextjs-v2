@@ -10,6 +10,7 @@ import { FaFileImage } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const EventEdit = () => {
   const { id } = useParams();
@@ -146,8 +147,10 @@ const EventEdit = () => {
   }, []);
   return (
     <div className="col-12">
-      <button className="btn btn-secondary mt-3 ms-2">Back</button>
       <div className="shadow-sm p-3 mb-5 mt-5 bg-white rounded border-0">
+        <Link href="/admin/event">
+          <button className="btn btn-secondary my-3">Back</button>
+        </Link>
         <div className="row justify-content-center">
           <div className="col-md-6">
             <Form.Group controlId="formTitle" className="mb-3">

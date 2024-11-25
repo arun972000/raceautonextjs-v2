@@ -6,8 +6,10 @@ import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Newsletter_ad_form = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setdescription] = useState("");
   const [edition_name, setEdition_name] = useState("");

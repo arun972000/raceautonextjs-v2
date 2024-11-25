@@ -25,7 +25,9 @@ const EventTable = () => {
     setSmShow(false);
     const toastId = toast.loading("Processing...");
     try {
-      await axios.delete(`${process.env.BACKEND_URL}api/admin/event/${deleteId}`);
+      await axios.delete(
+        `${process.env.BACKEND_URL}api/admin/event/${deleteId}`
+      );
       toast.update(toastId, {
         render: "Successfully removed!",
         type: "success",
@@ -48,14 +50,14 @@ const EventTable = () => {
   }, []);
   return (
     <>
-     <Modal
+      <Modal
         size="sm"
         show={smShow}
         onHide={() => setSmShow(false)}
         aria-labelledby="example-modal-sizes-title-sm"
       >
         <Modal.Header closeButton className="bg-danger text-white">
-          <Modal.Title id="example-modal-sizes-title-sm" >
+          <Modal.Title id="example-modal-sizes-title-sm">
             Delete Confirmation
           </Modal.Title>
         </Modal.Header>
@@ -75,9 +77,9 @@ const EventTable = () => {
         </Modal.Body>
       </Modal>
       <div className="col-12">
-        <Link href="/admin/event/create-event">
+        <Link href="/admin/event/create">
           <Button variant="primary" className="mt-3">
-            <MdCreateNewFolder />
+            Create
           </Button>
         </Link>
         <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">

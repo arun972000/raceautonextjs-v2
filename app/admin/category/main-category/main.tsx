@@ -82,9 +82,9 @@ const Main_Category = () => {
       </Modal>
 
       <div className="col-12">
-        <Link href="/admin/categories/create-mainCategory">
+        <Link href="/admin/category/main-category/create">
           <Button variant="primary" className="mt-3">
-            <MdCreateNewFolder />
+            Create
           </Button>
         </Link>
         <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">

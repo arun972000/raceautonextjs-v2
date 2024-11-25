@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdCreateNewFolder, MdDelete, MdModeEdit } from "react-icons/md";
@@ -6,12 +6,12 @@ import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Link from "next/link";
 
-export type marketType ={
-    id:number;
-    title:string;
-    title_slug:string;
-    color:string;
-}
+export type marketType = {
+  id: number;
+  title: string;
+  title_slug: string;
+  color: string;
+};
 
 const MarketList = () => {
   const [data, setData] = useState([]);
@@ -20,9 +20,7 @@ const MarketList = () => {
 
   const MainCategoryApi = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/market`
-      );
+      const res = await axios.get(`${process.env.BACKEND_URL}api/admin/market`);
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -93,9 +91,9 @@ const MarketList = () => {
       </Modal>
 
       <div className="col-12">
-        <Link href="/admin/market/create-market">
+        <Link href="/admin/market/create">
           <Button variant="primary" className="mt-3">
-            <MdCreateNewFolder />
+            Create
           </Button>
         </Link>
         <div className="shadow-sm p-3 mb-5  mt-3 bg-white rounded border-0">
@@ -103,13 +101,12 @@ const MarketList = () => {
             <thead className="bg-light">
               <tr>
                 <th>Market Name</th>
-
                 <th>Color</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item:marketType) => (
+              {data.map((item: marketType) => (
                 <tr key={item.id}>
                   <td>{item.title}</td>
 
@@ -117,18 +114,19 @@ const MarketList = () => {
                     {item.color}
                   </td>
                   <td>
-                    <Link href={`/admin/market/edit-market/${item.id}`}>
+                    <Link href={`/admin/market/${item.id}`}>
                       <button className="btn btn-primary me-3">
                         <MdModeEdit size={20} />
                       </button>
                     </Link>
-                    <button className="btn btn-danger" onClick={() => {
-                      setSmShow(true);
-                      setDeleteId(item.id);
-                    }}>
-                       <MdDelete
-                    size={20}
-                  />
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        setSmShow(true);
+                        setDeleteId(item.id);
+                      }}
+                    >
+                      <MdDelete size={20} />
                     </button>
                   </td>
                 </tr>

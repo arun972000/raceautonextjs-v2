@@ -1,5 +1,5 @@
 import React from "react";
-import "./page.css";
+import "../page.css";
 import Subscription from "./Subscription";
 import TextArea from "./TextArea";
 import Image from "next/image";

@@ -25,7 +25,7 @@ const SearchBar = () => {
       <InputGroup>
         <FormControl
           type="search"
-          placeholder="Search here..."
+          placeholder="Search here for articles..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={handleKeyDown}

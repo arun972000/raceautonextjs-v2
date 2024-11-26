@@ -29,7 +29,7 @@ const EditUser = () => {
     const roleData = async () => {
         try {
             const res = await axios.get(
-                `${process.env.BACKEND_URL}api/role-permission/roles`);
+                `${process.env.BACKEND_URL}api/admin/role/roles`);
             setRoleTypes(res.data)
         } catch (err) {
             console.log(err)
@@ -61,24 +61,27 @@ const EditUser = () => {
 
     const EditApi = async () => {
         try {
-            await axios.put(
-                `${process.env.BACKEND_URL}api/admin/user/${id}`,
-                {
-                    email,
-                    username,
-                    slug,
-                    role,
-                    about_me: aboutMe,
-                    facebook_url: facebookUrl,
-                    twitter_url: twitterUrl,
-                    instagram_url: instagramUrl,
-                    pinterest_url: pinterestUrl,
-                    linkedin_url: linkedinUrl,
-                    vk_url: vkUrl,
-                    telegram_url: telegramUrl,
-                    youtube_url: youtubeUrl,
-                }
-               );
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("username", username);
+            formData.append("slug", slug);
+            formData.append("role", role);
+            formData.append("about_me", aboutMe);
+            formData.append("facebook_url", facebookUrl);
+            formData.append("twitter_url", twitterUrl);
+            formData.append("instagram_url", instagramUrl);
+            formData.append("pinterest_url", pinterestUrl);
+            formData.append("linkedin_url", linkedinUrl);
+            formData.append("vk_url", vkUrl);
+            formData.append("telegram_url", telegramUrl);
+            formData.append("youtube_url", youtubeUrl);
+    
+            await axios.put(`${process.env.BACKEND_URL}api/admin/user/${id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
             toast.success("User updated!", {
                 position: "top-right",
                 autoClose: 4000,
@@ -106,6 +109,7 @@ const EditUser = () => {
             );
         }
     };
+    
 
     useEffect(() => {
         formDataApi();

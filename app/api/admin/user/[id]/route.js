@@ -43,6 +43,7 @@ export async function PUT(req) {
   const vk_url = formData.get("vk_url");
   const telegram_url = formData.get("telegram_url");
   const youtube_url = formData.get("youtube_url");
+  const pinterest_url = formData.get("pinterest_url");
 
   try {
     const [user] = await db.execute("SELECT * FROM users WHERE id = ?", [id]);

@@ -192,21 +192,21 @@ const AdminSidebar = async () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/article/slider" className="nav-link px-0">
                   <TfiLayoutSlider className="text-primary" />{" "}
                   <span className="d-none d-sm-inline text-primary">
                     Slider
                   </span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#" className="nav-link px-0">
                   <MdFeaturedPlayList className="text-primary" />{" "}
                   <span className="d-none d-sm-inline text-primary">
                     Featured
                   </span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/admin/article/draft" className="nav-link px-0">
                   <RiDraftFill className="text-primary" />{" "}
@@ -333,13 +333,13 @@ const AdminSidebar = async () => {
             </ul>
           </li>
           <li>
-            <Link href="#" className="nav-link px-0 align-middle">
+            <Link href="/admin/admin-access" className="nav-link px-0 align-middle">
               <RiAdminFill />{" "}
               <span className="ms-1 d-none d-sm-inline">Admin access</span>
             </Link>
           </li>
           <li>
-            <Link href="#" className="nav-link px-0 align-middle">
+            <Link href="/admin/settings" className="nav-link px-0 align-middle">
               <IoIosSettings />{" "}
               <span className="ms-1 d-none d-sm-inline">Settings</span>
             </Link>

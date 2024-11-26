@@ -36,7 +36,6 @@ export async function POST(req) {
         : new Date(scheduled) < new Date()
         ? 0
         : 1;
-console.log(scheduleTime)
     const draft = draftValue == "true" ? 0 : 1;
 
     const title_slug = title.split(" ").join("-");
@@ -79,7 +78,7 @@ console.log(scheduleTime)
       }
     }
 
-    if (files.length > 0) {
+   
       const firstFile = files[0];
       const firstFilename = firstFile.name;
       const firstFileExtension = path.extname(firstFilename);
@@ -168,13 +167,29 @@ console.log(scheduleTime)
   }
  
 }
-    }
+
 
     // Handle remaining files (secondary files)
     if (files.length > 1) {
       const remainingFiles = files.slice(1);
 
-      for (const file of remainingFiles) {
+      // for (const file of remainingFiles) {
+      //   const originalFilename = file.name;
+      //   const fileExtension = path.extname(originalFilename);
+      //   const newFilename = `${uuidv4()}${fileExtension}`;
+      //   const filePath = path.join(primaryUploadDir, newFilename);
+
+      //   // Save each remaining file
+      //   const fileBuffer = Buffer.from(await file.arrayBuffer());
+      //   fs.writeFileSync(filePath, fileBuffer);
+
+      //   uploadedFiles.push({
+      //     originalFilename,
+      //     newFilename,
+      //     filePath: `/uploads/${primaryFolder}/${newFilename}`,
+      //   });
+      // }
+      const filePromises = remainingFiles.map(async (file) => {
         const originalFilename = file.name;
         const fileExtension = path.extname(originalFilename);
         const newFilename = `${uuidv4()}${fileExtension}`;
@@ -183,13 +198,35 @@ console.log(scheduleTime)
         // Save each remaining file
         const fileBuffer = Buffer.from(await file.arrayBuffer());
         fs.writeFileSync(filePath, fileBuffer);
-
         uploadedFiles.push({
           originalFilename,
           newFilename,
           filePath: `/uploads/${primaryFolder}/${newFilename}`,
         });
-      }
+        const additional_image_default = `./public/uploads/images/${folderName}/${newFilename}`;
+        const additional_image_big = `./public/uploads/images/${folderName}/750${newFilename}`;
+        const img_default = `uploads/images/${folderName}/${newFilename}`;
+        const img_big = `uploads/images/${folderName}/750${newFilename}`;
+
+        // Move additional image to the target directory
+
+        // Resize additional images
+        await sharp(additional_image_default)
+          .resize(750, 500)
+          .toFile(additional_image_big);
+
+        // Insert additional image data into the database
+        await db.execute(
+          `
+          INSERT INTO post_images (post_id, image_big, image_default) 
+          VALUES (?, ?, ?)
+          `,
+          [postId, img_big, img_default]
+        );
+      });
+
+      // Wait for all filePromises to complete
+      await Promise.all(filePromises);
     }
 
     return NextResponse.json({

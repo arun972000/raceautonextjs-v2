@@ -92,7 +92,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
         isLoading: false,
         autoClose: 3000,
       });
-      postApi()
+      postApi();
     } catch (err) {
       toast.update(toastId, {
         render: "Failed to Add!",
@@ -472,14 +472,14 @@ const ArticleListV2 = ({ page }: { page: string }) => {
                 <td>{item.pageviews}</td>
                 <td>{formatDate(item.created_at)}</td>
                 <td>
+                  <Link href={`/admin/article/${item.id}`}>
+                    <button className="btn btn-primary mb-1">Edit</button>
+                  </Link>
                   <Dropdown>
                     <Dropdown.Toggle variant="info" id="dropdown-basic">
                       Actions
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Link href={`/admin/article/${item.id}`}>
-                        <p className="dropdown-item m-0 p-0 ms-3">Edit</p>
-                      </Link>
                       {item.is_breaking == 1 && (
                         <Dropdown.Item
                           onClick={() =>
@@ -555,7 +555,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
                     </Dropdown.Menu>
                   </Dropdown>
                   <button
-                    className="btn btn-danger mt-3"
+                    className="btn btn-danger mt-1"
                     onClick={() => {
                       setSmShow(true);
                       setDeleteId(item.id);

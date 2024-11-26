@@ -19,6 +19,7 @@ import "./create.css"; // Custom CSS file for additional styling
 import { useDropzone } from "react-dropzone";
 import { IoClose } from "react-icons/io5";
 import { Editor } from "@tinymce/tinymce-react";
+import Link from "next/link";
 
 export default function AdminPost() {
   const router = useRouter();
@@ -368,6 +369,11 @@ export default function AdminPost() {
 
   return (
     <Container className="my-5">
+      <Link href='/admin/article'> <button
+        className="btn btn-secondary mt-3 ms-2"
+      >
+        Back
+      </button></Link>
       <Card className="p-4 shadow-lg form-card">
         <h1 className="text-center mb-4">Create New Post</h1>
         <Form onSubmit={handleSubmit}>
@@ -596,7 +602,7 @@ export default function AdminPost() {
                   type="text"
                   placeholder="Enter Image Desscription"
                   value={imageDescription}
-                  onChange={(e)=>setImageDescription(e.target.value)}
+                  onChange={(e) => setImageDescription(e.target.value)}
                   required
                 />
               </Form.Group>

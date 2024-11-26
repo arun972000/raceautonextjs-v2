@@ -81,7 +81,7 @@ const AdminAccess = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <Link href={`/admin/role/edit-role/${item.id}`}>
+                                    <Link href={`/admin/admin-access/${item.id}`}>
                                         <button className="btn btn-primary me-3">
                                             <MdModeEdit size={20} />
                                         </button>

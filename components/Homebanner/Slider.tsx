@@ -12,13 +12,13 @@ type SliderType = {
 
 const Slider = async () => {
   const response = await fetch(`${process.env.BACKEND_URL}api/slider`, {
-    next: {
-      revalidate: 600,
-    },
+    cache: "no-store",
   });
   const slides: SliderType[] = await response.json();
 
-  return <MySwiperComponent slides={slides} />;
+  const sortedSlider = slides.sort((a, b) => a.slider_order - b.slider_order);
+
+  return <MySwiperComponent slides={sortedSlider} />;
 };
 
 export default Slider;

@@ -7,6 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Image from "next/image";
+import Link from "next/link";
 
 export type User = {
   id: number;
@@ -123,7 +124,7 @@ const UserTable = () => {
                   <td>{user.role}</td>
                   {/* <td>{user.created_date}</td> */}
                   <td>
-                    <Button variant="warning">Edit</Button>{" "}
+                    <Link href={`/admin/user/${user.id}`}><Button variant="warning">Edit</Button></Link>{" "}
                     <Button
                       variant="danger"
                       onClick={() => handleShow(user.id)}

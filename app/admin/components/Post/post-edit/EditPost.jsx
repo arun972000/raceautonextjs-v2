@@ -14,6 +14,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { IoMdClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 
 
@@ -388,11 +389,11 @@ const ArticleEdit = () => {
 
   return (
     <div className="col-12">
-      <button
+     <Link href='/admin/article'> <button
         className="btn btn-secondary mt-3 ms-2"
       >
         Back
-      </button>
+      </button></Link>
 
       <div className="shadow-sm p-3 mb-5 mt-3 bg-white rounded border-0">
         <div className="row">

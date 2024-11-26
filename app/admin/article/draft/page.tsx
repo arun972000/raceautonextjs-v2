@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/components/Time";
 import dynamic from "next/dynamic";
+import { RiFileEditFill } from "react-icons/ri";
 const Dropdownbuttons = dynamic(
   () => import("../../components/Post/Dropdownbuttons"),
   { ssr: false }
@@ -23,7 +24,27 @@ const page = async () => {
   WHERE posts.status = 0`);
 
   const value = post as adminPostList[];
-
+  if (value.length == 0) {
+    return <div
+      style={{
+        textAlign: "center",
+        margin: "20px auto",
+        padding: "20px",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        backgroundColor: "#f9f9f9",
+        maxWidth: "400px",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <RiFileEditFill 
+        style={{ fontSize: "3rem", color: "grey", marginBottom: "10px" }}
+      />
+      <p style={{ fontSize: "1.2rem", color: "#333", fontWeight: "500" }}>
+        No posts have been saved in draft
+      </p>
+    </div>;
+  }
   return (
     <>
       <div className="">

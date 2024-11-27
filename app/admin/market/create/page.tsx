@@ -1,7 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
+import Create_Market from "./create";
 
-const Create_Market = dynamic(() => import("./create"), { ssr: false });
 
 const page = () => {
   return <Create_Market />;

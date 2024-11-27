@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const MarketList = dynamic(() => import("./market"), { ssr: false });
+import MarketList from "./market";
+
 
 const page = () => {
   return <MarketList />;

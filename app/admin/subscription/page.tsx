@@ -1,7 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
+import SubscriptionTable from "./table";
 
-const SubscriptionTable = dynamic(() => import("./table"), { ssr: false });
 
 const page = () => {
   return <SubscriptionTable />;

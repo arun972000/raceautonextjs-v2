@@ -1,6 +1,8 @@
-import dynamic from "next/dynamic";
+export const dynamic = "force-dynamic";
+
 import React from "react";
-const AdminAccess = dynamic(() => import("./admin-access"), { ssr: false });
+import AdminAccess from "./admin-access";
+
 const page = () => {
   return <AdminAccess />;
 };

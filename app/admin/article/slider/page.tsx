@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
+export const dynamic = "force-dynamic";
 import React from "react";
-const SliderArticles = dynamic(() => import("./slider"), { ssr: false });
+import SliderArticles from "./slider";
 
 const page = () => {
   return <SliderArticles />;

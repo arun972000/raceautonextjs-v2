@@ -1,14 +1,12 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const DynamicDashboard = dynamic(
-  () => import("./components/Dashboard/Dashboard"),
-  { ssr: false }
-);
+import Dashboard from "./components/Dashboard/Dashboard";
+
 
 const page = () => {
   return (
     <>
-      <DynamicDashboard />
+      <Dashboard />
     </>
   );
 };

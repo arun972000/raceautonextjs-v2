@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic'
+export const dynamic = "force-dynamic";
 import React from 'react'
-const Admin_GeneralSettingsPage = dynamic(()=>import('./components/GeneralSettingsPage'))
+import Admin_GeneralSettingsPage from './components/GeneralSettingsPage'
 
 const page = () => {
   return (

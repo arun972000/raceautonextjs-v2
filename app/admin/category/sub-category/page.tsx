@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const Sub_Category = dynamic(() => import("./sub"), { ssr: false });
+import Sub_Category from "./sub";
+
 
 const page = () => {
   return <Sub_Category />;

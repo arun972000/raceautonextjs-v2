@@ -1,10 +1,10 @@
 export const dynamic = "force-dynamic";
 import React from "react";
-import EventTable from "./table";
+import SubscriptionPage from "./component/SubscriptionPage";
 
 
 const page = () => {
-  return <EventTable />;
+  return <SubscriptionPage/>;
 };
 
 export default page;

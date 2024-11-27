@@ -1,15 +1,14 @@
+export const dynamic = "force-dynamic";
+
 import db from "@/lib/db";
 import React from "react";
 import { adminPostList } from "../../components/Post/ArticleList";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/components/Time";
-import dynamic from "next/dynamic";
 import { RiFileEditFill } from "react-icons/ri";
-const Dropdownbuttons = dynamic(
-  () => import("../../components/Post/Dropdownbuttons"),
-  { ssr: false }
-);
+import Dropdownbuttons from "../../components/Post/Dropdownbuttons";
+
 
 const page = async () => {
   const [post] =

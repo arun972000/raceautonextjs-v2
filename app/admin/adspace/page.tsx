@@ -1,13 +1,11 @@
+export const dynamic = "force-dynamic";
 import React from 'react'
-import dynamic from 'next/dynamic'
-const DynamicAdForm = dynamic(
-  () => import('./Adspace'),
-  { ssr: false }
-)
+import AdForm from './Adspace';
+
  
 const page = () => {
   return (
-    <DynamicAdForm/>
+    <AdForm/>
   )
 }
 

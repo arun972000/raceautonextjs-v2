@@ -1,7 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
+import Admin_page from "./pageList";
 
-const Admin_page = dynamic(() => import("./pageList"), { ssr: false });
 
 const page = () => {
   return <Admin_page />;

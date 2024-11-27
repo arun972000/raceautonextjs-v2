@@ -1,8 +1,6 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const Create_newsLetterCategory = dynamic(() => import("./create"), {
-  ssr: false,
-});
+import Create_newsLetterCategory from "./create";
 
 const page = () => {
   return <Create_newsLetterCategory />;

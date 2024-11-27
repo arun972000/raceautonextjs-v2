@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const UserTable = dynamic(() => import("./user"), { ssr: false });
+import UserTable from "./user";
+
 
 const page = () => {
   return <UserTable />;

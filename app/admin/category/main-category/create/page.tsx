@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const Create_Main = dynamic(() => import("./create"), { ssr: false });
+import Create_Main from "./create";
+
 const page = () => {
   return <Create_Main />;
 };

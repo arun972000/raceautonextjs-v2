@@ -167,7 +167,7 @@ export async function GET(req: NextRequest) {
     const [category] = await db.execute<RowDataPacket[]>(
       `SELECT parent_id, name, name_slug, id FROM categories WHERE parent_id = 0`
     );
-console.log(query)
+
     const results = filteredRows.map((item) => {
       const findParent = category.find((obj) => item.parent_id == obj.id);
 

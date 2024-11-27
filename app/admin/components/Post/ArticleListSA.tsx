@@ -241,7 +241,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
       <Link href="/admin/article/create">
         <button className="btn btn-primary my-3">Create</button>
       </Link>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <Form>
           <Row className="">
             <Col md={2}>
@@ -319,7 +319,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
               </Form.Group>
             </Col>
 
-            {/* Filter by Date */}
+
             <Col md={2}>
               <Form.Group controlId="schedule">
                 <Form.Label className="form-label">Date</Form.Label>
@@ -342,9 +342,9 @@ const ArticleListV2 = ({ page }: { page: string }) => {
               </Button>
             </Col>
           </Row>
-          {/* Clear and Apply Buttons */}
+
         </Form>
-      </div>
+      </div> */}
       <div className="table-responsive">
         <table className="table table-bordered text-center">
           <thead>

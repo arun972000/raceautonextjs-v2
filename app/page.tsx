@@ -6,7 +6,6 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import Image from "next/image";
 import HeaderAd from "@/components/HeaderAd/HeaderAd";
 import GreenBar from "@/components/GreenBar/MagazineBar";
 

@@ -17,8 +17,12 @@ const inter = Inter({ subsets: ["latin"] });
 // };
 
 export const metadata: Metadata = {
-  title:
-    "Race Auto India - Latest News on Cars, Bikes, and Commercial Vehicles",
+  title: {
+    default:
+      "Race Auto India - Latest News on Cars, Bikes, and Commercial Vehicles",
+    template: "%s -Race Auto India",
+  },
+
   description:
     "Stay updated with the latest news and updates on cars, bikes, and commercial vehicles in India. Explore reviews, launches, and more.",
   keywords: [
@@ -31,6 +35,9 @@ export const metadata: Metadata = {
     "vehicle launches",
     "Race Auto India",
   ],
+  twitter: {
+    card: "summary_large_image",
+  },
   openGraph: {
     title:
       "Race Auto India - Latest News on Cars, Bikes, and Commercial Vehicles",

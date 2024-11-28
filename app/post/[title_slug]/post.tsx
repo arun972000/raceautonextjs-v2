@@ -4,7 +4,8 @@ import Link from "next/link";
 import SocialButton from "./SocialButton";
 import { formatDate } from "@/components/Time";
 import PostContent from "./postContent";
-import { NOTFOUND } from "dns";
+
+
 
 export type postsliderType = {
   image_default: string;
@@ -25,6 +26,7 @@ export type postType = {
   content: string;
   image_big: string;
   image_default: string;
+  image_mid:string;
   tag: TagType[];
   keywords: [];
 };
@@ -37,6 +39,7 @@ const Post = async ({ title }: { title: string }) => {
 
   const post = data[0];
 
+
   return (
     <>
       <div className="col-lg-8 mt-3">
@@ -46,7 +49,7 @@ const Post = async ({ title }: { title: string }) => {
           </h3>
           <p className="post-summary">{post.summary}</p>
           <small className="">Date: {formatDate(post.created_at)} </small>
-          <SocialButton />
+          <SocialButton title_slug={title}/>
           <hr />
         </div>
         <PostSlider images={post.images} title={post.title} />
@@ -58,9 +61,7 @@ const Post = async ({ title }: { title: string }) => {
         </p>
        <PostContent content={post.content}/>
         {post.tag.map((item) => (
-          <Link href="/tag" className="badge badge-info mr-3" key={item.id}>
-            {item.tag}
-          </Link>
+            <Link href='/tag' key={item.id}><span className="badge badge-primary mr-3" style={{color:'red'}}>{item.tag}</span></Link>
         ))}
       </div>
     </>

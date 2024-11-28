@@ -1,16 +1,36 @@
+'use client'
 import React from "react";
-import { FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
 import styles from "./page.module.css";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  TwitterIcon,
+  TwitterShareButton,
+} from "next-share";
 
-const SocialButton = () => {
+const SocialButton = ({title_slug}:{
+  title_slug:string
+}) => {
   return (
     <>
-      <div className={styles.logo_buttons_container}>
-        <FaWhatsapp className={`${styles.whatsapp} p-1`} size={25} />
-        <FaLinkedin className={`${styles.linkedin} p-1`} size={25} />
-        <FaInstagram className={`${styles.instagram} p-1`} size={25} />
-        <FaX className={`${styles.twitter} p-1`} size={25} />
+      <div className={`${styles.logo_buttons_container} mt-2`}>
+        <FacebookShareButton url={`${process.env.BACKEND_URL}post/${title_slug}`}>
+          <FacebookIcon size={32} round />
+        </FacebookShareButton>
+
+        <WhatsappShareButton url={`${process.env.BACKEND_URL}post/${title_slug}`}>
+          <WhatsappIcon size={32} round />
+        </WhatsappShareButton>
+        <LinkedinShareButton url={`${process.env.BACKEND_URL}post/${title_slug}`}>
+          <LinkedinIcon size={32} round />
+        </LinkedinShareButton>
+        <TwitterShareButton url={`${process.env.BACKEND_URL}post/${title_slug}`}>
+          <TwitterIcon size={32} round />
+        </TwitterShareButton>
       </div>
     </>
   );

@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import dynamic from "next/dynamic";
-const Magazine = dynamic(() => import("./magazine"), { ssr: false });
+import Magazine from "./magazine";
+
 
 const page = () => {
   return <Magazine />;

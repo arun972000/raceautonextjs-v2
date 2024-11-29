@@ -3,7 +3,7 @@ import Footer from "@/components/Footer/Footer";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import GreenBar from "@/components/GreenBar/MagazineBar";
 
-export default function PostLayout({
+export default function CategoryLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export default function PostLayout({
     <>
       <BreakingNews />
       <Navbar />
-     {children}
+      <div className="main_content__position">{children}</div>
       <Footer />
       <GreenBar/>
     </>

@@ -1,5 +1,5 @@
 import React from "react";
-import MainCategory from "./Tag";
+import TagComponent from "./Tag";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
 const MarketPage = (context: {
@@ -15,7 +15,7 @@ const MarketPage = (context: {
           <div className="col-12 d-flex justify-content-center">
             <div className="row justify-content-center">
               <div className="col-lg-8 mt-4">
-                <MainCategory categoryName={categoryName} page={page} />
+                <TagComponent categoryName={categoryName} page={page} />
               </div>
               <Sidebar />
             </div>

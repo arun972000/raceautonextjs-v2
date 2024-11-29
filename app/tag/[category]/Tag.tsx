@@ -23,7 +23,7 @@ const TagComponent = async ({
   const res = await fetch(
     `${
       process.env.BACKEND_URL
-    }api/post/market-category?market=${categoryName}&page=${page || 1}`,
+    }api/post/tag?category=${categoryName}&page=${page || 1}`,
     {
       next: {
         revalidate: 600,

@@ -16,6 +16,8 @@ const inter = Inter({ subsets: ["latin"] });
 //   userScalable: false,
 // };
 
+
+
 export const metadata: Metadata = {
   title: {
     default:

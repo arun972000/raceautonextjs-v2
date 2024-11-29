@@ -6,27 +6,24 @@ import ReactPaginate from "react-paginate";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 const PaginateComponent = ({ totalCount }: { totalCount: number }) => {
-  const params = useParams<{ "category": string }>();
+  const params = useParams<{ category: string }>();
   const searchParams = useSearchParams();
   const { push } = useRouter();
 
   const page = searchParams.get("page");
-  const pageNumber = Number(page) || 1;
+
 
   const totalPages = Math.ceil(totalCount / 10);
 
   const [itemOffset, setItemOffset] = useState(0);
 
-  // Simulate fetching items from another resources.
-  // (This could be items from props; or items loaded in a local state
-  // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset + 10;
+
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * 10) % totalCount;
     setItemOffset(newOffset);
-    push(`/market/${params["category"]}?page=${event.selected + 1}`);
+    push(`/tag/${params["category"]}?page=${event.selected + 1}`);
   };
 
   return (

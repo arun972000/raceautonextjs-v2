@@ -34,7 +34,7 @@ a {
   text-decoration: none;
 }
 
-.main_content__position {
+/* .main_content__position {
   background-color: var(--bg-color);
   min-height: 100vh;
   padding-top: 0;
@@ -61,4 +61,4 @@ a {
     z-index: 1;
     margin-bottom: 550px;
   }
-}
+} */

@@ -11,6 +11,8 @@ const SubscriptionForm = () => {
     phone_number: "",
   });
 
+  const [file, setFile]=useState([])
+
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e: any) => {
@@ -19,6 +21,12 @@ const SubscriptionForm = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleFileChange = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
   };
 
   const handleShow = () => setShowModal(true);
@@ -103,7 +111,7 @@ const SubscriptionForm = () => {
                   <Form.Control
                     type="file"
                     accept="image/*,.pdf"
-                    // onChange={handleFileChange}
+                    onChange={handleFileChange}
                     required
                   />
                 </Form.Group>

@@ -4,6 +4,7 @@ import Subscription from "./Subscription";
 import TextArea from "./TextArea";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import MainHorizontalChart from "./HorizontalChartOnlyMainCategory";
 
 const MyHorizontalBarChart = dynamic(() => import("./HorizontalChart"), {
   ssr: false,
@@ -21,7 +22,7 @@ const SubscriptionPage = () => {
             <TextArea />
           </div>
           <div className="col-lg-8">
-            <MyHorizontalBarChart />
+            <MainHorizontalChart/>
           </div>
           <div className="col-lg-4">
             <DonutChart />

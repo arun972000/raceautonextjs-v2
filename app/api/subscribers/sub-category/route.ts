@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
           count: found ? found.count : 0,
         };
       });
+      console.log()
     return NextResponse.json(result);
   } catch (err) {
     console.log(err);

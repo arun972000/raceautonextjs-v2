@@ -9,7 +9,6 @@ import { formatDate } from "@/components/Time";
 import { RiFileEditFill } from "react-icons/ri";
 import Dropdownbuttons from "../../components/Post/Dropdownbuttons";
 
-
 const page = async () => {
   const [post] =
     await db.execute(`SELECT posts.id, posts.image_small, posts.title, posts.pageviews, posts.title_slug, posts.created_at, 
@@ -24,25 +23,27 @@ const page = async () => {
 
   const value = post as adminPostList[];
   if (value.length == 0) {
-    return <div
-      style={{
-        textAlign: "center",
-        margin: "20px auto",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        backgroundColor: "#f9f9f9",
-        maxWidth: "400px",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <RiFileEditFill 
-        style={{ fontSize: "3rem", color: "grey", marginBottom: "10px" }}
-      />
-      <p style={{ fontSize: "1.2rem", color: "#333", fontWeight: "500" }}>
-        No posts have been saved in draft
-      </p>
-    </div>;
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          margin: "20px auto",
+          padding: "20px",
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+          backgroundColor: "#f9f9f9",
+          maxWidth: "400px",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <RiFileEditFill
+          style={{ fontSize: "3rem", color: "grey", marginBottom: "10px" }}
+        />
+        <p style={{ fontSize: "1.2rem", color: "#333", fontWeight: "500" }}>
+          No posts have been saved in draft
+        </p>
+      </div>
+    );
   }
   return (
     <>
@@ -56,7 +57,8 @@ const page = async () => {
               <th scope="col">Author</th>
               <th scope="col">Views</th>
               <th scope="col">Date</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Actions #1</th>
+              <th scope="col">Actions #2</th>
             </tr>
           </thead>
           <tbody>
@@ -174,6 +176,11 @@ const page = async () => {
                 <td>{formatDate(item.created_at)}</td>
                 <td>
                   <Dropdownbuttons item={item} />
+                </td>
+                <td>
+                  <Link href={`/admin/article/${item.id}`}>
+                    <button className="btn btn-primary mb-1">Edit</button>
+                  </Link>
                 </td>
               </tr>
             ))}

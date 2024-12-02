@@ -355,7 +355,8 @@ const ArticleListV2 = ({ page }: { page: string }) => {
               <th scope="col">Author</th>
               <th scope="col">Views</th>
               <th scope="col">Date</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Actions #1</th>
+              <th scope="col">Actions #2</th>
             </tr>
           </thead>
           <tbody>
@@ -472,9 +473,6 @@ const ArticleListV2 = ({ page }: { page: string }) => {
                 <td>{item.pageviews}</td>
                 <td>{formatDate(item.created_at)}</td>
                 <td>
-                  <Link href={`/admin/article/${item.id}`}>
-                    <button className="btn btn-primary mb-1">Edit</button>
-                  </Link>
                   <Dropdown>
                     <Dropdown.Toggle variant="info" id="dropdown-basic">
                       Actions
@@ -554,6 +552,11 @@ const ArticleListV2 = ({ page }: { page: string }) => {
                       )}
                     </Dropdown.Menu>
                   </Dropdown>
+                </td>
+                <td>
+                  <Link href={`/admin/article/${item.id}`}>
+                    <button className="btn btn-primary mb-1">Edit</button>
+                  </Link>{" "}
                   <button
                     className="btn btn-danger mt-1"
                     onClick={() => {

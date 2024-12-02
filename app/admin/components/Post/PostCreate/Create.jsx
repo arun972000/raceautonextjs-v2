@@ -44,7 +44,6 @@ export default function AdminPost() {
   const [marketArray, setMarketArray] = useState([]);
   const [tags, setTags] = useState([]);
   const editorRef = useRef(null);
-  const [validated, setValidated] = useState(false);
   const [draft, setDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -334,7 +333,7 @@ export default function AdminPost() {
 
       // Change the toast to success
       toast.update(toastId, {
-        render: "Post submitted successfully!",
+        render: draft ? 'Post saved to draft successfully' : 'Post submitted successfully!',
         type: "success",
         autoClose: 5000,
         isLoading: false,
@@ -370,7 +369,7 @@ export default function AdminPost() {
   return (
     <Container className="my-5">
       <Link href='/admin/article'> <button
-        className="btn btn-secondary mt-3 ms-2"
+        className="btn btn-secondary mb-3"
       >
         Back
       </button></Link>

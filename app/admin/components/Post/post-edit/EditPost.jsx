@@ -9,7 +9,6 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Editor } from "@tinymce/tinymce-react";
 import { IoMdClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -42,6 +41,7 @@ const ArticleEdit = () => {
   const editorRef = useRef(null);
   const [tags, setTags] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draft, setDraft] = useState(false);
   const [previewDefault, setPreviewDefault] = useState("");
   const [inputValue, setInputValue] = useState("");
   const handleInputChange = (event) => {
@@ -253,6 +253,7 @@ const ArticleEdit = () => {
       setCategorySub(data.category_id);
       setMarketValue(data.market);
       setTags(tagsData);
+      setDraft(data.status == 1 ? true : false)
       setImageDescription(
         data.image_description == null ? "" : data.image_description
       );
@@ -309,7 +310,7 @@ const ArticleEdit = () => {
 
   const handleImageRemove = async (url) => {
     try {
-      await axios.put(`${process.env.BACKEND_URL}api/post/remove-post-image`, {
+      await axios.put(`${process.env.BACKEND_URL}api/admin/post/remove-post-image`, {
         image_url: url,
         id: params.id,
       });
@@ -330,6 +331,7 @@ const ArticleEdit = () => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData();
+    formData.append("draft", draft.toString());
     formData.append("title", title);
     formData.append("content", content);
     formData.append("summary", summary);
@@ -672,9 +674,23 @@ const ArticleEdit = () => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" onClick={handleSubmit}>
-              {isSubmitting ? "Updated" : "Submit"}
-            </Button>
+            <Form.Check
+            type="checkbox"
+            id="draftCheckbox"
+            label='Draft Mode'
+            checked={draft}
+            className="text-danger mb-3"
+            onChange={() => setDraft(!draft)}
+          />
+
+            <Button
+            type="submit"
+            disabled={isSubmitting}
+            onClick={handleSubmit}
+            className={`${draft ? "btn-danger" : "btn-primary"} btn`}
+          >
+            {draft ? "Save to Draft" : "Publish"}
+          </Button>
           </div>
         </div>
       </div>

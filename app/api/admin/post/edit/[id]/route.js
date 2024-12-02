@@ -82,14 +82,15 @@ export async function PUT(req) {
     const is_breaking = formData.get("is_breaking");
     const image_description = formData.get("image_description");
     const market = formData.get("market");
-    // const draftValue = formData.get("draft");
+    const draftValue = formData.get("draft");
     // const scheduled = formData.get("schedule_time");
     const image_default = formData.get("image_default");
     const additional_image = formData.get("additional_image");
-
+    const draft = draftValue == "true" ? 0 : 1;
     const tags_split = tags.split(",");
     const title_slug = title.split(" ").join("-");
     const updateDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+
     let queryParams = [
       title,
       title_slug,
@@ -103,8 +104,11 @@ export async function PUT(req) {
       keywords,
       category_id,
       market,
+      draft,
       updateDate,
     ];
+
+    console.log(queryParams)
     let queryStr = `
       UPDATE posts SET
         title = ?,
@@ -119,6 +123,7 @@ export async function PUT(req) {
         keywords = ?,
         category_id = ?,
         market = ?,
+        status = ?,
         updated_at = ?
       WHERE id = ?
     `;
@@ -200,7 +205,8 @@ export async function PUT(req) {
         keywords = ?,
         category_id = ?,
         market = ?,
-         updated_at = ?
+        status = ?,
+        updated_at = ?
       WHERE id = ?
     `;
 
@@ -221,6 +227,7 @@ export async function PUT(req) {
         keywords,
         category_id,
         market,
+        draft,
         updateDate,
         id,
       ];

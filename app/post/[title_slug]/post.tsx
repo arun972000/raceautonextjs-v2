@@ -32,17 +32,20 @@ export type postType = {
 
 async function incrementPageView(pageUrl: string) {
   try {
-    await fetch(`${process.env.BACKEND_URL}/api/post/pageincrement/${pageUrl}`, {
-      method: "PUT",
-    });
+    await fetch(
+      `${process.env.BACKEND_URL}/api/post/pageincrement/${pageUrl}`,
+      {
+        method: "PUT",
+        cache: "no-store",
+      }
+    );
   } catch (error) {
     console.error("Error incrementing page view:", error);
   }
 }
 
 const Post = async ({ title }: { title: string }) => {
-
-  await incrementPageView(title)
+  await incrementPageView(title);
 
   const res = await fetch(
     `${process.env.BACKEND_URL}api/post/single-post/${title}`

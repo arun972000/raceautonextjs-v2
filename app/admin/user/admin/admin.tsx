@@ -24,7 +24,7 @@ const AdminTable = () => {
     const usersData = async () => {
 
         try {
-            const res = await axios.get(`${process.env.BACKEND_URL}api/admin/`)
+            const res = await axios.get(`${process.env.BACKEND_URL}api/admin/user/admin`)
             setUsers(res.data)
         } catch (err) {
             console.log(err)
@@ -34,7 +34,7 @@ const AdminTable = () => {
 
     const handleDelete = async() => {
         try{
-         await axios.delete(`${process.env.BACKEND_URL}api/user-info/delete-user/${userIdToDelete}`)
+         await axios.delete(`${process.env.BACKEND_URL}api/admin/user/${userIdToDelete}`)
              toast.success("User removed!", {
                  position: "top-right",
                  autoClose: 4000,

@@ -28,7 +28,7 @@ const LoginForm = () => {
     try {
       setError(""); // Clear previous error messages
       await axios.post("/api/login", values);
-      toast.info('🦄 Wow so easy!', {
+      toast.info('Login Success!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

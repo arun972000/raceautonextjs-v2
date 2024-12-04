@@ -12,13 +12,15 @@ import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
 import { IoMdClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { formatDate } from "@/components/Time";
 
 
 
 const ArticleEdit = () => {
   const params = useParams();
+  const router = useRouter()
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isBreaking, setIsBreaking] = useState("");
@@ -31,6 +33,8 @@ const ArticleEdit = () => {
   const [additionalImage, setAdditionalImage] = useState([]);
   const [addtionalPreview, setAdditionalPreview] = useState([]);
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [isScheduled, setisScheduled] = useState(false);
+  const [scheduledAt, setScheduledAt] = useState("");
   const [categoryMain, setCategoryMain] = useState("");
   const [categorySub, setCategorySub] = useState("");
   const [marketValue, setMarketValue] = useState("");
@@ -44,6 +48,7 @@ const ArticleEdit = () => {
   const [draft, setDraft] = useState(false);
   const [previewDefault, setPreviewDefault] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [created_at, setCreated_at] = useState(0)
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -253,7 +258,9 @@ const ArticleEdit = () => {
       setCategorySub(data.category_id);
       setMarketValue(data.market);
       setTags(tagsData);
-      setDraft(data.status == 1 ? true : false)
+      setCreated_at(data.created_at)
+      setDraft(data.status == 0 ? true : false)
+      setisScheduled(data.is_scheduled == 1 ? true : false)
       setImageDescription(
         data.image_description == null ? "" : data.image_description
       );
@@ -332,6 +339,7 @@ const ArticleEdit = () => {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append("draft", draft.toString());
+    if (isScheduled) formData.append("schedule_time", scheduledAt);
     formData.append("title", title);
     formData.append("content", content);
     formData.append("summary", summary);
@@ -391,11 +399,14 @@ const ArticleEdit = () => {
 
   return (
     <div className="col-12">
-     <Link href='/admin/article'> <button
-        className="btn btn-secondary mt-3 ms-2"
+ <button
+        className="btn btn-secondary mt-3 ms-2" onClick={()=>{
+          router.back()
+          router.refresh()
+        }}
       >
         Back
-      </button></Link>
+      </button>
 
       <div className="shadow-sm p-3 mb-5 mt-3 bg-white rounded border-0">
         <div className="row">
@@ -675,22 +686,46 @@ const ArticleEdit = () => {
               />
             </Form.Group>
             <Form.Check
-            type="checkbox"
-            id="draftCheckbox"
-            label='Draft Mode'
-            checked={draft}
-            className="text-danger mb-3"
-            onChange={() => setDraft(!draft)}
-          />
+              type="checkbox"
+              id="scheduleCheckbox"
+              label="Schedule"
+              checked={isScheduled}
+              onChange={() => setisScheduled(!isScheduled)}
+            />
+            {isScheduled && <p>{formatDate(created_at)}</p>}
+            {isScheduled && (
+              <Form.Group className="mt-3" controlId="schedule">
+                <Form.Label className="form-label">
+                  Schedule Date and Time
+                </Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  name="schedule"
+                  value={scheduledAt}
+                  onChange={(e) => setScheduledAt(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </Form.Group>
+            )}
+
+            <Form.Check
+              type="checkbox"
+              id="draftCheckbox"
+              label='Draft Mode'
+              checked={draft}
+              className="text-danger mb-3"
+              onChange={() => setDraft(!draft)}
+            />
 
             <Button
-            type="submit"
-            disabled={isSubmitting}
-            onClick={handleSubmit}
-            className={`${draft ? "btn-danger" : "btn-primary"} btn`}
-          >
-            {draft ? "Save to Draft" : "Publish"}
-          </Button>
+              type="submit"
+              disabled={isSubmitting}
+              onClick={handleSubmit}
+              className={`${draft ? "btn-danger" : "btn-primary"} btn`}
+            >
+              {draft ? "Save to Draft" : "Publish"}
+            </Button>
           </div>
         </div>
       </div>

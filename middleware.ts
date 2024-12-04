@@ -15,10 +15,10 @@ async function verifyToken(token:any) {
 }
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/public')) {
+  // if (req.nextUrl.pathname.startsWith('/public')) {
 
-    return NextResponse.redirect(new URL("/unauthorized", req.url));
-  }
+  //   return NextResponse.redirect(new URL("/unauthorized", req.url));
+  // }
 
 
   // Retrieve the token from cookies

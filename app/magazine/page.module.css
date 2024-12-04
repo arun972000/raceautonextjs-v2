@@ -13,3 +13,20 @@
 .magazinecardcontainer {
   overflow: hidden;
 }
+
+
+.button_category{
+  animation: shrinkGrow 1.5s infinite ease-in-out;
+}
+
+@keyframes shrinkGrow {
+  0% {
+    transform: scale(1); /* Original size */
+  }
+  50% {
+    transform: scale(1.1); /* Grow */
+  }
+  100% {
+    transform: scale(1); /* Back to original size */
+  }
+}

@@ -15,6 +15,7 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const title = formData.get("title");
+    const slug = formData.get("title_slug");
     const content = formData.get("content");
     const summary = formData.get("summary");
     const category_id = formData.get("category_id");
@@ -38,7 +39,7 @@ export async function POST(req) {
         : 1;
     const draft = draftValue == "true" ? 0 : 1;
 
-    const title_slug = title.split(" ").join("-");
+    const title_slug = slug.split(" ").join("-");
 
     const tags_split = tags.split(",");
 

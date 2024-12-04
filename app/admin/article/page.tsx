@@ -1,5 +1,4 @@
 import React from "react";
-import ArticleList from "../components/Post/ArticleList";
 import dynamic from "next/dynamic";
 
 const ArticleListV2 = dynamic(

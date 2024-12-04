@@ -7,6 +7,8 @@ const nextConfig = {
     BACKEND_URL: process.env.BACKEND_URL,
   },
   images: {
+    loader: 'custom',
+    loaderFile: './app/loader.js',
     remotePatterns: [
       {
         protocol: "http",

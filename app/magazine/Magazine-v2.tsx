@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import axios from "axios";
 import Image from "next/image";
@@ -8,6 +9,10 @@ import ReactPaginate from "react-paginate";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import styles from './page.module.css'
 
 const Magazine_v2 = () => {
   const [data, setData] = useState<magazineCardType[]>([]);
@@ -71,11 +76,76 @@ const Magazine_v2 = () => {
   }, [selectedCategory]);
   return (
     <>
-      <div
-        style={{ aspectRatio: "2.88/1", width: "100%", position: "relative" }}
+      <Swiper
+        pagination={true}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: true,
+        }}
+        modules={[Autoplay, Pagination]}
+        className="mySwiper"
       >
-        <Image src="/images/magazine banner.jpg" alt="magazine banner" fill />
-      </div>
+        <SwiperSlide>
+          <div
+            style={{
+              aspectRatio: "2.88/1",
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            <Image
+              src="/images/Property 1=Frame 35 (2).jpg"
+              alt="magazine banner"
+              fill
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div
+            style={{
+              aspectRatio: "2.88/1",
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            <Image
+              src="/images/Property 1=Frame 36 (1).jpg"
+              alt="magazine banner"
+              fill
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div
+            style={{
+              aspectRatio: "2.88/1",
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            <Image
+              src="/images/Property 1=Frame 37 (2).jpg"
+              alt="magazine banner"
+              fill
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div
+            style={{
+              aspectRatio: "2.88/1",
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            <Image
+              src="/images/Property 1=Frame 38 (1).jpg"
+              alt="magazine banner"
+              fill
+            />
+          </div>
+        </SwiperSlide>
+      </Swiper>
       <div className="container">
         <div className="row">
           <h2 className="mt-4">Latest Edition</h2>
@@ -146,17 +216,17 @@ const Magazine_v2 = () => {
       </div>
       <div className="container my-3">
         <div
-          className="row justify-content-center text-white"
+          className="row justify-content-center text-white "
           style={{
             backgroundImage: "url('/images/category banner.jpg')",
             backgroundSize: "cover",
-            height: 300,
+            height: 250,
           }}
         >
-          <h2 className="m-0 mt-3">Categories</h2>
+          <h2 className="m-0 mt-3 text-center" >Categories</h2>
           <div className="col-md-3 col-lg-2 text-center">
             <button
-              className="btn btn-light"
+              className={`btn btn-light ${styles.button_category}`}
               onClick={() => setSelectedCatgeory(0)}
             >
               All Magazines
@@ -166,7 +236,7 @@ const Magazine_v2 = () => {
           {category.map((item: any) => (
             <div className="col-md-3 col-lg-2 text-center" key={item.id}>
               <button
-                className="btn btn-light"
+                className={`btn btn-light ${styles.button_category}`}
                 onClick={() => setSelectedCatgeory(item.id)}
               >
                 {item.title}

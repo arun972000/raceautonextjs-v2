@@ -59,7 +59,8 @@ const page = async () => {
               <th scope="col">Author</th>
               <th scope="col">Views</th>
               <th scope="col">Date</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Actions #1</th>
+              <th scope="col">Actions #2</th>
             </tr>
           </thead>
           <tbody>
@@ -177,6 +178,11 @@ const page = async () => {
                 <td>{formatDate(item.created_at)}</td>
                 <td>
                   <Dropdownbuttons item={item} />
+                </td>
+                <td>
+                  <Link href={`/admin/article/${item.id}`}>
+                    <button className="btn btn-primary mb-1">Edit</button>
+                  </Link>
                 </td>
               </tr>
             ))}

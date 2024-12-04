@@ -123,3 +123,19 @@ export async function PUT(req) {
     return NextResponse.json({ err: "internal server error" }, { status: 500 });
   }
 }
+
+export async function DELETE(req) {
+  try {
+    const { pathname } = new URL(req.url);
+    const id = pathname.split("/").pop();
+    await db.execute("DELETE FROM users WHERE id = ?", [id]);
+
+    return NextResponse.json({ message: "user deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

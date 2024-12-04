@@ -53,7 +53,7 @@ const UserTable = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/user-info/delete-user/${userIdToDelete}`
+        `${process.env.BACKEND_URL}api/admin/user/${userIdToDelete}`
       );
       toast.success("User removed!", {
         position: "top-right",

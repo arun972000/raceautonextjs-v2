@@ -24,6 +24,7 @@ import Link from "next/link";
 export default function AdminPost() {
   const router = useRouter();
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [content, setContent] = useState("");
   const [summary, setSummary] = useState("");
   const [category_main, setCategory_main] = useState("");
@@ -56,6 +57,23 @@ export default function AdminPost() {
       setTags([...tags, inputValue]);
       setInputValue("");
     }
+  };
+
+  const formatSlug = (input) =>
+    input
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, "") // Remove symbols
+      .slice(0, 60); // Limit to 60 characters
+
+  const handleTitleChange = (e) => {
+    const input = e.target.value;
+    setTitle(input);
+    setSlug(formatSlug(input)); // Automatically update the slug
+  };
+
+  const handleSlugChange = (e) => {
+    const input = e.target.value;
+    setSlug(formatSlug(input)); // Ensure slug restrictions are applied
   };
 
   const handleRemoveTag = (index) => {
@@ -194,16 +212,7 @@ export default function AdminPost() {
     setState((prevState) => (prevState === 1 ? 0 : 1));
   };
 
-  const formatDateTime = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
 
   const handleEditorChange = (editContent) => {
     setContent(editContent);
@@ -298,6 +307,7 @@ export default function AdminPost() {
     formData.append("draft", draft.toString());
     if (isScheduled) formData.append("schedule_time", scheduledAt);
     formData.append("title", title);
+    formData.append("title_slug", slug)
     formData.append("content", content);
     formData.append("summary", summary);
     formData.append("category_id", category_sub);
@@ -385,13 +395,29 @@ export default function AdminPost() {
                   placeholder="Enter title"
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={handleTitleChange}
                   className="form-input"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
                   Title is required.
                 </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Slug</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Generated slug"
+                  name="slug"
+                  value={slug}
+                  onChange={handleSlugChange} // Allow user to edit slug manually
+                  className="form-input"
+                  required
+                />
+                <Form.Text className="text-muted">
+                  Maximum 60 characters, no special symbols.
+                </Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="summary">

@@ -21,10 +21,8 @@ import {
 import {
   MdAdminPanelSettings,
   MdEventAvailable,
-  MdFeaturedPlayList,
   MdOutlineDisplaySettings,
   MdOutlineEventAvailable,
-  MdOutlineRecommend,
   MdPriceChange,
 } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
@@ -32,7 +30,6 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { FaUsersGear } from "react-icons/fa6";
 import { GrArticle } from "react-icons/gr";
 import { TfiLayoutSlider } from "react-icons/tfi";
-import { PiNewspaperClippingBold } from "react-icons/pi";
 import { TbCategoryMinus, TbCategoryPlus } from "react-icons/tb";
 import Image from "next/image";
 const AdminSidebar = async () => {
@@ -290,9 +287,9 @@ const AdminSidebar = async () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="nav-link px-0">
+                <Link href="/admin/user/admin" className="nav-link px-0">
                   <MdAdminPanelSettings className="text-primary" />{" "}
-                  <span className="d-none d-sm-inline">Admin</span>
+                  <span className="d-none d-sm-inline text-primary">Admin</span>
                 </Link>
               </li>
             </ul>
@@ -333,7 +330,10 @@ const AdminSidebar = async () => {
             </ul>
           </li>
           <li>
-            <Link href="/admin/admin-access" className="nav-link px-0 align-middle">
+            <Link
+              href="/admin/admin-access"
+              className="nav-link px-0 align-middle"
+            >
               <RiAdminFill />{" "}
               <span className="ms-1 d-none d-sm-inline">Admin access</span>
             </Link>

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
+import schedule from "node-schedule";
 
 const currentDate = new Date();
 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -16,7 +17,7 @@ export async function GET(req) {
     const id = pathname.split("/").pop();
 
     const [joinedRow] = await db.execute(
-      `SELECT posts.id, posts.image_mid, posts.summary, posts.title, posts.content, posts.market, posts.keywords, posts.pageviews, posts.user_id, posts.image_description, posts.is_slider, posts.is_featured, posts.is_breaking, posts.is_recommended, posts.category_id, categories.name_slug AS name_slug, categories.parent_id AS parent_id, categories.color AS color, categories.name AS sub_category, users.username AS username 
+      `SELECT posts.id, posts.image_mid, posts.summary, posts.title, posts.content, posts.market, posts.keywords, posts.pageviews, posts.user_id, posts.image_description, posts.status, posts.is_slider, posts.is_featured, posts.is_breaking, posts.is_recommended, posts.category_id, posts.is_scheduled, posts.created_at, categories.name_slug AS name_slug, categories.parent_id AS parent_id, categories.color AS color, categories.name AS sub_category, users.username AS username 
       FROM posts
       INNER JOIN users ON posts.user_id = users.id
       INNER JOIN categories ON posts.category_id = categories.id
@@ -90,7 +91,14 @@ export async function PUT(req) {
     const tags_split = tags.split(",");
     const title_slug = title.split(" ").join("-");
     const updateDate = new Date().toISOString().slice(0, 19).replace("T", " ");
-
+    const scheduled = formData.get("schedule_time");
+    const scheduleTime =
+      scheduled === null || scheduled === "" || scheduled === undefined
+        ? 0
+        : new Date(scheduled) < new Date()
+        ? 0
+        : 1;
+console.log(scheduleTime)
     let queryParams = [
       title,
       title_slug,
@@ -106,9 +114,9 @@ export async function PUT(req) {
       market,
       draft,
       updateDate,
+      scheduleTime,
     ];
 
-    console.log(queryParams)
     let queryStr = `
       UPDATE posts SET
         title = ?,
@@ -124,7 +132,8 @@ export async function PUT(req) {
         category_id = ?,
         market = ?,
         status = ?,
-        updated_at = ?
+        updated_at = ?,
+        is_scheduled = ?
       WHERE id = ?
     `;
 
@@ -206,7 +215,8 @@ export async function PUT(req) {
         category_id = ?,
         market = ?,
         status = ?,
-        updated_at = ?
+        updated_at = ?,
+        is_scheduled = ?
       WHERE id = ?
     `;
 
@@ -229,6 +239,7 @@ export async function PUT(req) {
         market,
         draft,
         updateDate,
+        scheduleTime,
         id,
       ];
 
@@ -267,6 +278,32 @@ export async function PUT(req) {
 
       await Promise.all(filePromises);
     }
+    if (scheduled) {
+      const publishTime = new Date(scheduled);
+      const currentTime = new Date();
+
+      const updateCreated_at = new Date()
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0];
+
+      // Check if the scheduled time is in the past
+      if (publishTime < currentTime) {
+        await db.execute(`UPDATE posts SET created_at = ? WHERE id = ?`, [
+          updateCreated_at,
+          id,
+        ]);
+        console.log("Scheduled time is in the past. No action taken.");
+      } else {
+        schedule.scheduleJob(publishTime, async function () {
+          await db.execute(
+            `UPDATE posts SET is_scheduled = 0, created_at = ? WHERE id = ?`,
+            [updateCreated_at, id]
+          );
+          console.log(`Post with ID ${id} is now published.`);
+        });
+      }
+    }
 
     await db.execute(queryStr, queryParams);
     await db.execute("DELETE FROM tags WHERE post_id = ?", [id]);
@@ -281,5 +318,6 @@ export async function PUT(req) {
     return NextResponse.json("updated");
   } catch (err) {
     console.log(err);
+    return NextResponse.json({ err: "internal server err" }, { status: 500 });
   }
 }
